@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="en-us">
+<head>
+<meta charset="utf-8">
+<meta name="description" content="">
+<meta name="keywords" content="">
+<meta name="author" content="">
+<meta name="generator" content="Hugo 0.30.2" />
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="stylesheet" href="https://michellymenezes.github.io/portifolio-visualizacao/css/style.css" type="text/css">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Code+Pro:400,700" type="text/css">
+<link rel="alternate" href="https://michellymenezes.github.io/index.xml" type="application/rss+xml" title="My New Hugo Site">
+<title>Primeiro Post - My New Hugo Site</title>
+</head>
+<body>
+
+<header>
+  <div class="container clearfix">
+    <a class="path" href="https://michellymenezes.github.io/portifolio-visualizacao/">[My New Hugo Site]</a>
+    <span class="caret"># _</span>
+    <div class="right">
+      
+    </div>
+  </div>
+</header>
+
+<div class="container">
+
+
+<main role="main" class="article">
+  
+<article class="single" itemscope itemtype="http://schema.org/BlogPosting">
+  <div class="meta">
+
+    <span class="key">published on</span>
+    <span class="val"><time itemprop="datePublished" datetime="2017-11-14">November 14, 2017</time></span>
+
+
+
+  </div>
+  <h1 class="headline" itemprop="headline">Primeiro Post</h1>
+  <section class="body" itemprop="articleBody">
+    <div id="vis" width=300></div>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/vega/3.0.7/vega.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/vega-lite/2.0.1/vega-lite.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/vega-embed/3.0.0-rc7/vega-embed.js"></script>
+<script>
+    const spec = {
+    "$schema": "https://vega.github.io/schema/vega-lite/v2.json",
+    "data": {
+        "url": "https://api.insa.gov.br/reservatorios/12172/monitoramento",
+        "format": {
+        "type": "json",
+        "property": "volumes",
+        "parse": {
+            "DataInformacao": "utc:'%d/%m/%Y'"
+                }
+            }
+        },
+
+    "width": 500,
+    "height": 120,
+
+    "mark": {
+        "type": "area",
+        "interpolate": "monotone"
+    },
+    "selection": {
+      "brush": {"type": "interval", "encodings": ["x"]}
+    },
+    "encoding": {
+      "x": {
+        "timeUnit" : "monthyear",
+        "field": "DataInformacao",
+        "type": "temporal",
+        "axis": {"format": "%Y", "title" : "Volume percentual ao longo dos anos"}
+       },
+      "y": {
+        "field": "VolumePercentual",
+        "type": "quantitative",
+        "axis": {"tickCount": 30, "grid": false, "title": "Volume percentual"}
+         }
+       }
+     };
+      vegaEmbed('#vis', spec).catch(console.warn);
+</script>
+
+  </section>
+</article>
+
+</main>
+
+
+</div>
+
+<footer>
+  <div class="container">
+    <span class="copyright">&copy; 2017  My New Hugo Site - <a rel="license" href="http://creativecommons.org/licenses/by/4.0/">CC BY 4.0</a></span>
+  </div>
+</footer>
+
+</body>
+</html>
+
