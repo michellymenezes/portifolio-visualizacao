@@ -34,7 +34,7 @@ draft: false
         "filter": {
           "timeUnit": "year",
           "field": "DataInformacao",
-          "range": [1999, 2017]
+          "range": [1990, 2017]
           }
         }],
 
