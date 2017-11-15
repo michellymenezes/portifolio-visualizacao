@@ -66,7 +66,7 @@ Uma página sobre visualizações.
 
   </div>
   <section class="summary">
-    Uma análise sobre o Açude Epitácio Pessoa (Boqueirão)       const spec = { "title": "Mediana do volume percentual ao longo de meses e anos", "$schema": "https://vega.github.io/schema/vega-lite/v2.json", "data": { "url": "https://api.insa.gov.br/reservatorios/12172/monitoramento", "format": { "type": "json", "property": "volumes", "parse": { "DataInformacao": "utc:'%d/%m/%Y'" } } }, "width": 400, "mark": "rect", "encoding": { "x": { "timeUnit" : "year", "field": "DataInformacao", "type": "ordinal", "axis": {"format": "%Y", "title" : "Anos"} }, "  <a href="/portifolio-visualizacao/post/primeiro-post/">Read More...</a>
+    Uma análise sobre o Açude Epitácio Pessoa (Boqueirão)        const spec0 = { "title": "Mediana do volume percentual ao longo dos anos", "$schema": "https://vega.github.io/schema/vega-lite/v2.json", "data": { "url": "https://api.insa.gov.br/reservatorios/12172/monitoramento", "format": { "type": "json", "property": "volumes", "parse": { "DataInformacao": "utc:'%d/%m/%Y'" } } }, "width": 550, "transform":[{ "filter": { "timeUnit": "year", "field": "DataInformacao", "range": [1999, 2017] } }], "mark": { "type": "circle", "size": 100 }, "encoding": { "  <a href="/portifolio-visualizacao/post/primeiro-post/">Read More...</a>
   </section>
 </article>
 
