@@ -1,5 +1,5 @@
 baseURL = "https://michellymenezes.github.io/portifolio-visualizacao/"
 languageCode = "en-us"
-title = "My New Hugo Site"
+title = "Portifólio Visualização"
 publishDir = "docs"
 theme = "base16"

@@ -9,14 +9,14 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <link rel="stylesheet" href="https://michellymenezes.github.io/portifolio-visualizacao/css/style.css" type="text/css">
 <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Code+Pro:400,700" type="text/css">
-<link rel="alternate" href="https://michellymenezes.github.io/index.xml" type="application/rss+xml" title="My New Hugo Site">
-<title>Posts - My New Hugo Site</title>
+<link rel="alternate" href="https://michellymenezes.github.io/index.xml" type="application/rss+xml" title="Portifólio Visualização">
+<title>Posts - Portifólio Visualização</title>
 </head>
 <body>
 
 <header>
   <div class="container clearfix">
-    <a class="path" href="https://michellymenezes.github.io/portifolio-visualizacao/">[My New Hugo Site]</a>
+    <a class="path" href="https://michellymenezes.github.io/portifolio-visualizacao/">[Portifólio Visualização]</a>
     <span class="caret"># _</span>
     <div class="right">
       
@@ -39,7 +39,7 @@
 
   </div>
   <section class="summary">
-    const spec = { "$schema": "https://vega.github.io/schema/vega-lite/v2.json", "data": { "url": "https://api.insa.gov.br/reservatorios/12172/monitoramento", "format": { "type": "json", "property": "volumes", "parse": { "DataInformacao": "utc:'%d/%m/%Y'" } } }, "width": 500, "height": 120, "mark": { "type": "area", "interpolate": "monotone" }, "selection": { "brush": {"type": "interval", "encodings": ["x"]} }, "encoding": { "x": { "timeUnit" : "monthyear", "field": "DataInformacao", "type": "temporal", "axis": {"format": "%Y", "title" : "Volume percentual ao longo dos anos"} }, "  <a href="/portifolio-visualizacao/post/primeiro-post/">Read More...</a>
+    const spec = { "title": "Mediana do volume percentual ao longo de meses e anos", "$schema": "https://vega.github.io/schema/vega-lite/v2.json", "data": { "url": "https://api.insa.gov.br/reservatorios/12172/monitoramento", "format": { "type": "json", "property": "volumes", "parse": { "DataInformacao": "utc:'%d/%m/%Y'" } } }, "width": 500, "height": 120, "mark": "rect", "encoding": { "x": { "timeUnit" : "year", "field": "DataInformacao", "type": "ordinal", "axis": {"format": "%Y", "title" : "Anos"} }, "y": { "timeUnit" : "month", "field": "DataInformacao", "  <a href="/portifolio-visualizacao/post/primeiro-post/">Read More...</a>
   </section>
 </article>
 
@@ -50,7 +50,7 @@
 
 <footer>
   <div class="container">
-    <span class="copyright">&copy; 2017  My New Hugo Site - <a rel="license" href="http://creativecommons.org/licenses/by/4.0/">CC BY 4.0</a></span>
+    <span class="copyright">&copy; 2017  Portifólio Visualização - <a rel="license" href="http://creativecommons.org/licenses/by/4.0/">CC BY 4.0</a></span>
   </div>
 </footer>
 
