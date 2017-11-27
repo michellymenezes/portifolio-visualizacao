@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<html lang="en-us">
+<head>
+<meta charset="utf-8">
+<meta name="description" content="">
+<meta name="keywords" content="">
+<meta name="author" content="">
+<meta name="generator" content="Hugo 0.30.2" />
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="stylesheet" href="https://michellymenezes.github.io/portifolio-visualizacao/css/style.css" type="text/css">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Code+Pro:400,700" type="text/css">
+<link rel="alternate" href="https://michellymenezes.github.io/index.xml" type="application/rss+xml" title="Portifólio Visualização">
+<title>Barra com dados - Portifólio Visualização</title>
+</head>
+<body>
+
+<header>
+  <div class="container clearfix">
+    <a class="path" href="https://michellymenezes.github.io/portifolio-visualizacao/">[Portifólio Visualização]</a>
+    <span class="caret"># _</span>
+    <div class="right">
+      
+    </div>
+  </div>
+</header>
+
+<div class="container">
+
+
+<main role="main" class="article">
+  
+<article class="single" itemscope itemtype="http://schema.org/BlogPosting">
+  <div class="meta">
+
+    <span class="key">published on</span>
+    <span class="val"><time itemprop="datePublished" datetime="2017-11-27">November 27, 2017</time></span>
+
+
+
+  </div>
+  <h1 class="headline" itemprop="headline">Barra com dados</h1>
+  <section class="body" itemprop="articleBody">
+    <!DOCTYPE html>
+<html lang="pt-br">
+
+<head>
+  <meta charset="utf-8">
+  <script src="https://d3js.org/d3.v4.min.js"></script>
+</head>
+<body>
+
+    <div class="container">
+      <div class="row">
+        <h2>Barras com dados vindos de uma url</h2>
+      </div>
+      <div class="row mychart" id="chart">
+      </div>
+    </div>
+
+  <script src="https://d3js.org/d3.v4.min.js"></script>
+  <style>
+    .mychart rect {
+      fill: steelblue;
+    }
+
+    .mychart rect:hover {
+      fill: goldenrod;
+    }
+
+    .mychart text {
+      font: 12px sans-serif;
+      text-anchor: left;
+    }
+  </style>
+
+  <script>
+
+    function desenhaBarras(dados) {
+      // Preencha aqui.
+
+      var alturaSVG = 400, larguraSVG = 600;
+      var	margin = {top: 10, right: 20, bottom:30, left: 45}, // para descolar a vis das bordas do grafico
+          larguraVis = larguraSVG - margin.left - margin.right,
+          alturaVis = alturaSVG - margin.top - margin.bottom;
+
+
+      var grafico = d3.select('#chart') // cria elemento <svg> com um <g> dentro
+        .append('svg')
+          .attr('width', larguraVis + margin.left + margin.right)
+          .attr('height', alturaVis + margin.top + margin.bottom)
+        .append('g') // para entender o <g> vá em x03-detalhes-svg.html
+          .attr('transform', 'translate(' +  margin.left + ',' + margin.top + ')');
+
+      // === EDITE DAQUI ===
+
+      var x = d3.scaleBand()
+                .domain(dados.map((dado, indice) => dado.letra))
+                .rangeRound([0,larguraVis])
+                .padding(.1); // Configure essa escala com domain, range e padding
+
+      var y = d3.scaleLinear()
+                .domain([0, d3.max(dados, (d, i) => d.valor*100)])
+                .rangeRound([alturaVis, 0]);// Configure essa escala com domain e range
+                               // Lembre que uma escala pode converter de 1..10 -> 100..1
+
+      // === ATÉ DAQUI ===
+
+      grafico.selectAll('g')
+              .data(dados)
+              .enter()
+                .append('rect')
+                  .attr('x', d => x(d.letra))   // usando a escala definida acima
+                  .attr('width', x.bandwidth()) // largura da barra via escala
+                  .attr('y', d => y(d.valor*100))
+                  .attr('height', (d) => alturaVis - y(d.valor*100)); // de cabeca para baixo
+
+
+      grafico.append("g")
+              .attr("class", "x axis")
+              .attr("transform", "translate(0," + alturaVis + ")")
+              .call(d3.axisBottom(x)); // magica do d3: gera eixo a partir da escala
+
+      grafico.append('g')
+              .attr('transform', 'translate(0,0)')
+              .call(d3.axisLeft(y))  // gera eixo a partir da escala
+
+      grafico.append("text")
+        .attr("transform", "translate(-30," + (alturaVis + margin.top)/2 + ") rotate(-90)")
+        .text("Frequencia em porcentagem");
+    }
+
+    d3.tsv('https://raw.githubusercontent.com/michellymenezes/intro-d3/master/dados/alphabet.tsv', function(dados) {
+      desenhaBarras(dados);
+    });
+
+  </script>
+</body>
+
+  </html>
+
+  </section>
+</article>
+
+</main>
+
+
+</div>
+
+<footer>
+  <div class="container">
+    <span class="copyright">&copy; 2017  Portifólio Visualização - <a rel="license" href="http://creativecommons.org/licenses/by/4.0/">CC BY 4.0</a></span>
+  </div>
+</footer>
+
+</body>
+</html>
+

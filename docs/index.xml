@@ -12,12 +12,12 @@
     
     
     <item>
-      <title>Epitacio Pessoa</title>
-      <link>https://michellymenezes.github.io/portifolio-visualizacao/post/epitacio-pessoa/</link>
+      <title>Barra com dados</title>
+      <link>https://michellymenezes.github.io/portifolio-visualizacao/post/barra-com-dados/</link>
       <pubDate>Mon, 27 Nov 2017 09:15:51 -0300</pubDate>
       
-      <guid>https://michellymenezes.github.io/portifolio-visualizacao/post/epitacio-pessoa/</guid>
-      <description></description>
+      <guid>https://michellymenezes.github.io/portifolio-visualizacao/post/barra-com-dados/</guid>
+      <description>Barras com dados vindos de uma url      .mychart rect { fill: steelblue; } .mychart rect:hover { fill: goldenrod; } .mychart text { font: 12px sans-serif; text-anchor: left; }   function desenhaBarras(dados) { // Preencha aqui. var alturaSVG = 400, larguraSVG = 600; var	margin = {top: 10, right: 20, bottom:30, left: 45}, // para descolar a vis das bordas do grafico larguraVis = larguraSVG - margin.</description>
     </item>
     
     <item>
