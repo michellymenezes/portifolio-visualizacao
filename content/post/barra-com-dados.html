@@ -1,5 +1,5 @@
 ---
-title: "Barra com dados"
+title: "Um scatterplot"
 date: 2017-11-27T09:15:51-03:00
 draft: false
 ---
@@ -8,22 +8,26 @@ draft: false
 
 <head>
   <meta charset="utf-8">
+  <title>Barras simples</title>
   <script src="https://d3js.org/d3.v4.min.js"></script>
 </head>
+
 <body>
-
-    <div class="container">
-      <div class="row">
-        <h2>Barras com dados vindos de uma url</h2>
-      </div>
-      <div class="row mychart" id="chart">
-      </div>
+  <div class="container">
+    <div class="row">
+      <h2>Boqueirão: seus volumes e meses chuvosos</h2>
     </div>
+    <div class="row mychart" id="chart">
+    </div>
+  </div>
 
-  <script src="https://d3js.org/d3.v4.min.js"></script>
   <style>
     .mychart rect {
       fill: steelblue;
+    }
+
+    .mychart dot {
+      stroke: #000;
     }
 
     .mychart rect:hover {
@@ -34,9 +38,17 @@ draft: false
       font: 12px sans-serif;
       text-anchor: left;
     }
+
+    .mychart tooltip {
+      position: absolute;
+      width: 200px;
+      height: 28px;
+      pointer-events: none;
+    }
   </style>
 
-  <script>
+  <script type="text/javascript">
+    "use strict"
 
     function desenhaBarras(dados) {
       // Preencha aqui.
@@ -46,7 +58,9 @@ draft: false
           larguraVis = larguraSVG - margin.left - margin.right,
           alturaVis = alturaSVG - margin.top - margin.bottom;
 
-
+      /*
+       * Prepara onde adicionaremos a visualizacao
+       */
       var grafico = d3.select('#chart') // cria elemento <svg> com um <g> dentro
         .append('svg')
           .attr('width', larguraVis + margin.left + margin.right)
@@ -55,33 +69,53 @@ draft: false
           .attr('transform', 'translate(' +  margin.left + ',' + margin.top + ')');
 
       // === EDITE DAQUI ===
+      /*
+       * As escalas
+       */
 
-      var x = d3.scaleBand()
-                .domain(dados.map((dado, indice) => dado.letra))
-                .rangeRound([0,larguraVis])
-                .padding(.1); // Configure essa escala com domain, range e padding
+       var cValue = function(d) {return (d.mes >= 1 & d.mes <= 4);},
+       color = d3.scaleOrdinal(d3.schemeCategory10);
+       // var color = d3.scaleBand()
+       //          .domain([true, false])
+       //          .range(["orange", "steelblue"]);
+
+      var x = d3.scaleLinear()
+                .domain([Math.min(...dados.map((d, i)=> d.noventa_percentil))-1, Math.max(...dados.map((d, i)=> d.noventa_percentil))+1])
+                .rangeRound([0, larguraVis]); // Configure essa escala com domain, range e padding
 
       var y = d3.scaleLinear()
-                .domain([0, d3.max(dados, (d, i) => d.valor*100)])
-                .rangeRound([alturaVis, 0]);// Configure essa escala com domain e range
+                .domain([Math.min(...dados.map((d, i)=> d.dez_percentil))-2, Math.max(...dados.map((d, i)=> d.dez_percentil))+2])
+                .rangeRound( [alturaVis, 0]);// Configure essa escala com domain e range
                                // Lembre que uma escala pode converter de 1..10 -> 100..1
 
       // === ATÉ DAQUI ===
 
+      /*
+       * As marcas
+       */
       grafico.selectAll('g')
               .data(dados)
               .enter()
-                .append('rect')
-                  .attr('x', d => x(d.letra))   // usando a escala definida acima
-                  .attr('width', x.bandwidth()) // largura da barra via escala
-                  .attr('y', d => y(d.valor*100))
-                  .attr('height', (d) => alturaVis - y(d.valor*100)); // de cabeca para baixo
+                .append('circle')
+                .attr("class", "dot")
+                .attr("r", 6)
+                .attr('cx', d => x(d.noventa_percentil))   // usando a escala definida acima
+                .attr('width', (d) => alturaVis - x(d.noventa_percentil)) // largura da barra via escala
+                .attr('cy', d => y(d.dez_percentil))
+                .attr('height', (d) => alturaVis - y(d.dez_percentil))
+                .style("fill", function(d) { return color(cValue(d)); });; // de cabeca para baixo
 
-
+      /*
+       * Os eixos
+       */
       grafico.append("g")
               .attr("class", "x axis")
               .attr("transform", "translate(0," + alturaVis + ")")
               .call(d3.axisBottom(x)); // magica do d3: gera eixo a partir da escala
+
+      grafico.append("text")
+        .attr("transform", "translate(" + (larguraVis)/2 + "," + (alturaVis + margin.bottom)  + ")")
+        .text("Volume - 90 percentil");
 
       grafico.append('g')
               .attr('transform', 'translate(0,0)')
@@ -89,14 +123,14 @@ draft: false
 
       grafico.append("text")
         .attr("transform", "translate(-30," + (alturaVis + margin.top)/2 + ") rotate(-90)")
-        .text("Frequencia em porcentagem");
+        .text("Volume - 10 percentil");
     }
 
-    d3.tsv('https://raw.githubusercontent.com/michellymenezes/intro-d3/master/dados/alphabet.tsv', function(dados) {
+    d3.csv('https://raw.githubusercontent.com/michellymenezes/intro-d3/master/dados/boqueirao-por-mes.csv', function(dados) {
       desenhaBarras(dados);
     });
 
   </script>
 </body>
 
-  </html>
+</html>
