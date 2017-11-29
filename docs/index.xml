@@ -13,10 +13,10 @@
     
     <item>
       <title>Um scatterplot</title>
-      <link>https://michellymenezes.github.io/portifolio-visualizacao/post/barra-com-dados/</link>
+      <link>https://michellymenezes.github.io/portifolio-visualizacao/post/primeiro-d3/</link>
       <pubDate>Mon, 27 Nov 2017 09:15:51 -0300</pubDate>
       
-      <guid>https://michellymenezes.github.io/portifolio-visualizacao/post/barra-com-dados/</guid>
+      <guid>https://michellymenezes.github.io/portifolio-visualizacao/post/primeiro-d3/</guid>
       <description>Barras simples    Boqueirão: seus volumes e meses chuvosos     .mychart rect { fill: steelblue; } .mychart dot { stroke: #000; } .mychart rect:hover { fill: goldenrod; } .mychart text { font: 12px sans-serif; text-anchor: left; } .mychart tooltip { position: absolute; width: 200px; height: 28px; pointer-events: none; }  &#34;use strict&#34; function desenhaBarras(dados) { // Preencha aqui. var alturaSVG = 400, larguraSVG = 600; var	margin = {top: 10, right: 20, bottom:30, left: 45}, // para descolar a vis das bordas do grafico larguraVis = larguraSVG - margin.</description>
     </item>
     
