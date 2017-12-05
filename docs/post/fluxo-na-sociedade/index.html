@@ -1,0 +1,191 @@
+<!DOCTYPE html>
+<html lang="en-us">
+<head>
+<meta charset="utf-8">
+<meta name="description" content="">
+<meta name="keywords" content="">
+<meta name="author" content="">
+<meta name="generator" content="Hugo 0.30.2" />
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="stylesheet" href="https://michellymenezes.github.io/portifolio-visualizacao/css/style.css" type="text/css">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Code+Pro:400,700" type="text/css">
+<link rel="alternate" href="https://michellymenezes.github.io/index.xml" type="application/rss+xml" title="Portifólio Visualização">
+<title>Fluxo na sociedade - Portifólio Visualização</title>
+</head>
+<body>
+
+<header>
+  <div class="container clearfix">
+    <a class="path" href="https://michellymenezes.github.io/portifolio-visualizacao/">[Portifólio Visualização]</a>
+    <span class="caret"># _</span>
+    <div class="right">
+      
+    </div>
+  </div>
+</header>
+
+<div class="container">
+
+
+<main role="main" class="article">
+  
+<article class="single" itemscope itemtype="http://schema.org/BlogPosting">
+  <div class="meta">
+
+    <span class="key">published on</span>
+    <span class="val"><time itemprop="datePublished" datetime="2017-12-05">December 05, 2017</time></span>
+
+
+
+  </div>
+  <h1 class="headline" itemprop="headline">Fluxo na sociedade</h1>
+  <section class="body" itemprop="articleBody">
+    <!DOCTYPE html>
+<html lang="pt-br">
+
+<head>
+  <meta charset="utf-8">
+  <title>Barras simples</title>
+  <script src="https://d3js.org/d3.v4.min.js"></script>
+</head>
+
+<body>
+  <div class="container">
+    <div class="row">
+      <h1>O que o fluxo da mobilidade pode nos contar sobre a sociedade</h1>
+    </div>
+    <div class="row mychart" id="chart">
+    </div>
+  </div>
+
+  <style>
+    .mychart rect {
+      fill: steelblue;
+    }
+
+    .mychart dot {
+      stroke: #000;
+    }
+
+    .mychart rect:hover {
+      fill: goldenrod;
+    }
+
+    .mychart text {
+      font: 12px sans-serif;
+      text-anchor: left;
+    }
+
+    .mychart tooltip {
+      position: absolute;
+      width: 200px;
+      height: 28px;
+      pointer-events: none;
+    }
+  </style>
+
+  <script type="text/javascript">
+    "use strict"
+
+    function desenhaBarras(dados) {
+      // Preencha aqui.
+
+      var alturaSVG = 400, larguraSVG = 600;
+      var	margin = {top: 10, right: 20, bottom:30, left: 45}, // para descolar a vis das bordas do grafico
+          larguraVis = larguraSVG - margin.left - margin.right,
+          alturaVis = alturaSVG - margin.top - margin.bottom;
+
+      /*
+       * Prepara onde adicionaremos a visualizacao
+       */
+      var grafico = d3.select('#chart') // cria elemento <svg> com um <g> dentro
+        .append('svg')
+          .attr('width', larguraVis + margin.left + margin.right)
+          .attr('height', alturaVis + margin.top + margin.bottom)
+        .append('g') // para entender o <g> vá em x03-detalhes-svg.html
+          .attr('transform', 'translate(' +  margin.left + ',' + margin.top + ')');
+
+      // === EDITE DAQUI ===
+      /*
+       * As escalas
+       */
+
+       var cValue = function(d) {return (d.mes >= 1 & d.mes <= 4);},
+       color = d3.scaleOrdinal(d3.schemeCategory10);
+       // var color = d3.scaleBand()
+       //          .domain([true, false])
+       //          .range(["orange", "steelblue"]);
+
+      var x = d3.scaleLinear()
+                .domain([Math.min(...dados.map((d, i)=> d.carros))-1, Math.max(...dados.map((d, i)=> d.carros))+1])
+                .rangeRound([0, larguraVis]); // Configure essa escala com domain, range e padding
+
+      var y = d3.scaleLinear()
+                .domain([Math.min(...dados.map((d, i)=> d.motos))-2, Math.max(...dados.map((d, i)=> d.motos))+2])
+                .rangeRound( [alturaVis, 0]);// Configure essa escala com domain e range
+                               // Lembre que uma escala pode converter de 1..10 -> 100..1
+
+      // === ATÉ DAQUI ===
+
+      /*
+       * As marcas
+       */
+      grafico.selectAll('g')
+              .data(dados)
+              .enter()
+                .append('circle')
+                .attr("class", "dot")
+                .attr("r", 6)
+                .attr('cx', d => x(d.carros))   // usando a escala definida acima
+                .attr('width', (d) => alturaVis - x(d.carros)) // largura da barra via escala
+                .attr('cy', d => y(d.motos))
+                .attr('height', (d) => alturaVis - y(d.motos))
+                .style("fill", function(d) { return color(cValue(d)); });; // de cabeca para baixo
+
+      /*
+       * Os eixos
+       */
+      grafico.append("g")
+              .attr("class", "x axis")
+              .attr("transform", "translate(0," + alturaVis + ")")
+              .call(d3.axisBottom(x)); // magica do d3: gera eixo a partir da escala
+
+      grafico.append("text")
+        .attr("transform", "translate(" + (larguraVis)/2 + "," + (alturaVis + margin.bottom)  + ")")
+        .text("Volume - 90 percentil");
+
+      grafico.append('g')
+              .attr('transform', 'translate(0,0)')
+              .call(d3.axisLeft(y))  // gera eixo a partir da escala
+
+      grafico.append("text")
+        .attr("transform", "translate(-30," + (alturaVis + margin.top)/2 + ") rotate(-90)")
+        .text("Volume - 10 percentil");
+    }
+
+    d3.csv('https://raw.githubusercontent.com/luizaugustomm/pessoas-no-acude/master/dados/processados/dados.csv', function(dados) {
+      desenhaBarras(dados);
+    });
+
+  </script>
+</body>
+
+</html>
+
+  </section>
+</article>
+
+</main>
+
+
+</div>
+
+<footer>
+  <div class="container">
+    <span class="copyright">&copy; 2017  Portifólio Visualização - <a rel="license" href="http://creativecommons.org/licenses/by/4.0/">CC BY 4.0</a></span>
+  </div>
+</footer>
+
+</body>
+</html>
+
