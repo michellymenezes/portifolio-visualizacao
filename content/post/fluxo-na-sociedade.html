@@ -16,9 +16,9 @@ draft: false
 <body>
   <div class="container">
     <div class="row">
-      <h1>O que o fluxo da mobilidade pode nos contar sobre a sociedade</h1>
+      <h1>O que o fluxo da mobilidade pode nos contar sobre a sociedade?</h1>
     </div>
-    <div class="row mychart" id="chart">
+    <div class="row mychart" id="chart1">
     </div>
   </div>
 
@@ -46,90 +46,150 @@ draft: false
       height: 28px;
       pointer-events: none;
     }
+
+    .mychart rect.bordered {
+      stroke: #E6E6E6;
+      stroke-width:2px;
+    }
+
+    .mychart text.mono {
+      font-size: 9pt;
+      font-family: Consolas, courier;
+      fill: #818080;
+    }
+
+    .mychart text.axis-grupo {
+      fill: #818080;
+    }
+
+    .mychart text.axis-horas {
+      fill: #818080;
+    }`
   </style>
 
   <script type="text/javascript">
     "use strict"
 
-    function desenhaBarras(dados) {
+
+      function onlyUnique(value, index, self) {
+          return self.indexOf(value) === index;
+      }
+
+      function tipoToNum(tipo) {
+        if (tipo === "carros") return 0;
+        if (tipo === "motos") return 1;
+        if (tipo === "caminhoes") return 2;
+        if (tipo === "onibus") return 3;
+        if (tipo === "total_ciclistas") return 4;
+        return 5;
+      }
+
+      function pickColor(colors, n, tipo){
+        n = Math.floor(n/205*9);
+        return colors[n]
+      }
       // Preencha aqui.
 
       var alturaSVG = 400, larguraSVG = 600;
-      var	margin = {top: 10, right: 20, bottom:30, left: 45}, // para descolar a vis das bordas do grafico
+      var	margin = {top: 50, right: 40, bottom:100, left:80}, // para descolar a vis das bordas do grafico
           larguraVis = larguraSVG - margin.left - margin.right,
-          alturaVis = alturaSVG - margin.top - margin.bottom;
+          alturaVis = alturaSVG - margin.top - margin.bottom,
+          gridSize = Math.floor(larguraVis / 15),
+          legendElementWidth = Math.floor(larguraVis / 9),
+          buckets = 9,
+          colors = ["#ffffd9","#edf8b1","#c7e9b4","#7fcdbb","#41b6c4","#1d91c0","#225ea8","#253494","#081d58"]; // alternatively colorbrewer.YlGnBu[9];
+
+
 
       /*
        * Prepara onde adicionaremos a visualizacao
        */
-      var grafico = d3.select('#chart') // cria elemento <svg> com um <g> dentro
+      var grafico = d3.select('#chart1') // cria elemento <svg> com um <g> dentro
         .append('svg')
           .attr('width', larguraVis + margin.left + margin.right)
           .attr('height', alturaVis + margin.top + margin.bottom)
         .append('g') // para entender o <g> vá em x03-detalhes-svg.html
           .attr('transform', 'translate(' +  margin.left + ',' + margin.top + ')');
 
-      // === EDITE DAQUI ===
-      /*
-       * As escalas
-       */
+      var grupoLabels = grafico.selectAll(".grupoLabel")
+          .data(["Carros", "Motos", "Caminhoes", "Onibus", "Ciclistas", "Pedestres"])
+          .enter().append("text")
+            .text(function (d) { return d; })
+            .attr("x", 0)
+            .attr("y", function (d, i) { return i * gridSize; })
+            .style("text-anchor", "end")
+            .attr("transform", "translate(-6," + gridSize / 1.5 + ")")
+            .attr("class", function (d, i) { return "grupoLabel mono axis axis-grupo"; });
 
-       var cValue = function(d) {return (d.mes >= 1 & d.mes <= 4);},
-       color = d3.scaleOrdinal(d3.schemeCategory10);
-       // var color = d3.scaleBand()
-       //          .domain([true, false])
-       //          .range(["orange", "steelblue"]);
+      var timeLabels = grafico.selectAll(".timeLabel")
+                .data([6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20])
+                .enter().append("text")
+                  .text(function(d) { return d; })
+                  .attr("x", function(d, i) { return i * gridSize; })
+                  .attr("y", 0)
+                  .style("text-anchor", "middle")
+                  .attr("transform", "translate(" + gridSize / 2 + ", -6)")
+                  .attr("class", function(d, i) { return "timeLabel mono axis"; });
 
-      var x = d3.scaleLinear()
-                .domain([Math.min(...dados.map((d, i)=> d.carros))-1, Math.max(...dados.map((d, i)=> d.carros))+1])
-                .rangeRound([0, larguraVis]); // Configure essa escala com domain, range e padding
 
-      var y = d3.scaleLinear()
-                .domain([Math.min(...dados.map((d, i)=> d.motos))-2, Math.max(...dados.map((d, i)=> d.motos))+2])
-                .rangeRound( [alturaVis, 0]);// Configure essa escala com domain e range
-                               // Lembre que uma escala pode converter de 1..10 -> 100..1
+      var heatmapChart = function() {
+        d3.csv("https://raw.githubusercontent.com/michellymenezes/portifolio-visualizacao/master/data/tipos-fluxo-campina-median.csv",
 
-      // === ATÉ DAQUI ===
+        function(error, dados) {
+          // var colorScale = d3.scaleQuantile()
+          //     .domain([0, buckets - 1, d3.max(dados, function (d) { return d.n; })])
+          //     .range(colors);
 
-      /*
-       * As marcas
-       */
-      grafico.selectAll('g')
-              .data(dados)
-              .enter()
-                .append('circle')
-                .attr("class", "dot")
-                .attr("r", 6)
-                .attr('cx', d => x(d.carros))   // usando a escala definida acima
-                .attr('width', (d) => alturaVis - x(d.carros)) // largura da barra via escala
-                .attr('cy', d => y(d.motos))
-                .attr('height', (d) => alturaVis - y(d.motos))
-                .style("fill", function(d) { return color(cValue(d)); });; // de cabeca para baixo
+          var colorScale = d3.scaleThreshold()
+              .domain([0, 10, 30, 70, 100, 120, 150, 170, 190])
+              .range([0].concat(colors));
 
-      /*
-       * Os eixos
-       */
-      grafico.append("g")
-              .attr("class", "x axis")
-              .attr("transform", "translate(0," + alturaVis + ")")
-              .call(d3.axisBottom(x)); // magica do d3: gera eixo a partir da escala
+          var cards = grafico.selectAll(".hour")
+              .data(dados);
 
-      grafico.append("text")
-        .attr("transform", "translate(" + (larguraVis)/2 + "," + (alturaVis + margin.bottom)  + ")")
-        .text("Volume - 90 percentil");
+          cards.append("title");
 
-      grafico.append('g')
-              .attr('transform', 'translate(0,0)')
-              .call(d3.axisLeft(y))  // gera eixo a partir da escala
+          cards.enter().append("rect")
+              .attr("x", function(d) { return (d.hora - 6) * gridSize; })
+              .attr("y", function(d) { return (tipoToNum(d.tipo)) * gridSize; })
+              .attr("rx", 4)
+              .attr("ry", 4)
+              .attr("class", "hour bordered")
+              .attr("width", gridSize)
+              .attr("height", gridSize)
+              .style("fill", function(d) { return pickColor(colors, d.n, d.tipo)});
 
-      grafico.append("text")
-        .attr("transform", "translate(-30," + (alturaVis + margin.top)/2 + ") rotate(-90)")
-        .text("Volume - 10 percentil");
-    }
+          cards.transition().duration(1000)
+              .style("fill", function(d) { return colorScale(d.n); });
 
-    d3.csv('https://raw.githubusercontent.com/luizaugustomm/pessoas-no-acude/master/dados/processados/dados.csv', function(dados) {
-      desenhaBarras(dados);
-    });
+          cards.select("title").text(function(d) { return d.n; });
+
+          cards.exit().remove();
+
+          var legend = grafico.selectAll(".legend")
+              .data(colorScale.domain(), function(d) { return d; })
+              .enter().append("g")
+              .attr("class", "legend");
+
+          legend.append("rect")
+            .attr("x", function(d, i) { return legendElementWidth * i; })
+            .attr("y", alturaVis)
+            .attr("width", legendElementWidth)
+            .attr("height", gridSize / 2)
+            .style("fill", function(d, i) { return colors[i]; });
+
+          legend.append("text")
+            .attr("class", "mono")
+            .text(function(d) { return "≥ " + Math.round(d); })
+            .attr("x", function(d, i) { return legendElementWidth * i; })
+            .attr("y", alturaVis + gridSize);
+
+          legend.exit().remove();
+
+        });
+      };
+
+      heatmapChart();
 
   </script>
 </body>
