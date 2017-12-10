@@ -1,121 +1,121 @@
 horario_inicial,value,tipo
-06:00,107.5,Não motorizado
-06:15,175.0,Não motorizado
-06:30,155.0,Não motorizado
-06:45,149.0,Não motorizado
-07:00,128.0,Não motorizado
-07:15,138.0,Não motorizado
-07:30,132.0,Não motorizado
-07:45,104.0,Não motorizado
-08:00,82.0,Não motorizado
-08:15,88.0,Não motorizado
-08:30,81.0,Não motorizado
-08:45,57.0,Não motorizado
-09:00,61.0,Não motorizado
-09:15,45.0,Não motorizado
-09:30,44.0,Não motorizado
-09:45,54.0,Não motorizado
-10:00,32.0,Não motorizado
-10:15,23.0,Não motorizado
-10:30,33.0,Não motorizado
-10:45,43.0,Não motorizado
-11:00,83.0,Não motorizado
-11:15,17.0,Não motorizado
-11:30,53.0,Não motorizado
-11:45,30.0,Não motorizado
-12:00,38.0,Não motorizado
-12:15,30.0,Não motorizado
-12:30,34.0,Não motorizado
-12:45,49.0,Não motorizado
-13:00,45.0,Não motorizado
-13:15,62.0,Não motorizado
-13:30,35.0,Não motorizado
-13:45,25.0,Não motorizado
-14:00,36.0,Não motorizado
-14:15,42.0,Não motorizado
-14:30,27.0,Não motorizado
-14:45,34.0,Não motorizado
-15:00,43.0,Não motorizado
-15:15,36.0,Não motorizado
-15:30,71.0,Não motorizado
-15:45,87.0,Não motorizado
-16:00,96.0,Não motorizado
-16:15,127.0,Não motorizado
-16:30,112.0,Não motorizado
-16:45,182.0,Não motorizado
-17:00,219.0,Não motorizado
-17:15,245.0,Não motorizado
-17:30,242.0,Não motorizado
-17:45,247.0,Não motorizado
-18:00,215.0,Não motorizado
-18:15,231.0,Não motorizado
-18:30,213.0,Não motorizado
-18:45,219.0,Não motorizado
-19:00,218.0,Não motorizado
-19:15,179.0,Não motorizado
-19:30,148.0,Não motorizado
-19:45,117.0,Não motorizado
-20:00,102.0,Não motorizado
-20:15,58.0,Não motorizado
-20:30,60.0,Não motorizado
-20:45,60.0,Não motorizado
-06:00,50.0,Motorizado
-06:15,102.0,Motorizado
-06:30,217.0,Motorizado
-06:45,304.0,Motorizado
-07:00,332.0,Motorizado
-07:15,260.0,Motorizado
-07:30,230.0,Motorizado
-07:45,305.0,Motorizado
-08:00,281.0,Motorizado
-08:15,245.0,Motorizado
-08:30,243.0,Motorizado
-08:45,218.0,Motorizado
-09:00,183.0,Motorizado
-09:15,187.0,Motorizado
-09:30,207.0,Motorizado
-09:45,206.0,Motorizado
-10:00,208.0,Motorizado
-10:15,196.0,Motorizado
-10:30,206.0,Motorizado
-10:45,207.0,Motorizado
-11:00,274.0,Motorizado
-11:15,238.0,Motorizado
-11:30,253.0,Motorizado
-11:45,305.0,Motorizado
-12:00,263.0,Motorizado
-12:15,208.0,Motorizado
-12:30,205.0,Motorizado
-12:45,278.0,Motorizado
-13:00,277.0,Motorizado
-13:15,252.0,Motorizado
-13:30,249.0,Motorizado
-13:45,293.0,Motorizado
-14:00,274.0,Motorizado
-14:15,287.0,Motorizado
-14:30,199.0,Motorizado
-14:45,254.0,Motorizado
-15:00,213.0,Motorizado
-15:15,212.0,Motorizado
-15:30,273.0,Motorizado
-15:45,212.0,Motorizado
-16:00,253.0,Motorizado
-16:15,234.0,Motorizado
-16:30,230.0,Motorizado
-16:45,303.0,Motorizado
-17:00,291.0,Motorizado
-17:15,246.0,Motorizado
-17:30,281.0,Motorizado
-17:45,268.0,Motorizado
-18:00,305.0,Motorizado
-18:15,246.0,Motorizado
-18:30,266.0,Motorizado
-18:45,241.0,Motorizado
-19:00,180.0,Motorizado
-19:15,198.0,Motorizado
-19:30,193.0,Motorizado
-19:45,182.0,Motorizado
-20:00,158.0,Motorizado
-20:15,160.0,Motorizado
-20:30,145.0,Motorizado
-20:45,107.0,Motorizado
+06:00,107,Não motorizado
+06:15,175,Não motorizado
+06:30,155,Não motorizado
+06:45,149,Não motorizado
+07:00,128,Não motorizado
+07:15,138,Não motorizado
+07:30,132,Não motorizado
+07:45,104,Não motorizado
+08:00,82,Não motorizado
+08:15,88,Não motorizado
+08:30,81,Não motorizado
+08:45,57,Não motorizado
+09:00,61,Não motorizado
+09:15,45,Não motorizado
+09:30,44,Não motorizado
+09:45,54,Não motorizado
+10:00,32,Não motorizado
+10:15,23,Não motorizado
+10:30,33,Não motorizado
+10:45,43,Não motorizado
+11:00,83,Não motorizado
+11:15,17,Não motorizado
+11:30,53,Não motorizado
+11:45,30,Não motorizado
+12:00,38,Não motorizado
+12:15,30,Não motorizado
+12:30,34,Não motorizado
+12:45,49,Não motorizado
+13:00,45,Não motorizado
+13:15,62,Não motorizado
+13:30,35,Não motorizado
+13:45,25,Não motorizado
+14:00,36,Não motorizado
+14:15,42,Não motorizado
+14:30,27,Não motorizado
+14:45,34,Não motorizado
+15:00,43,Não motorizado
+15:15,36,Não motorizado
+15:30,71,Não motorizado
+15:45,87,Não motorizado
+16:00,96,Não motorizado
+16:15,127,Não motorizado
+16:30,112,Não motorizado
+16:45,182,Não motorizado
+17:00,219,Não motorizado
+17:15,245,Não motorizado
+17:30,242,Não motorizado
+17:45,247,Não motorizado
+18:00,215,Não motorizado
+18:15,231,Não motorizado
+18:30,213,Não motorizado
+18:45,219,Não motorizado
+19:00,218,Não motorizado
+19:15,179,Não motorizado
+19:30,148,Não motorizado
+19:45,117,Não motorizado
+20:00,102,Não motorizado
+20:15,58,Não motorizado
+20:30,60,Não motorizado
+20:45,60,Não motorizado
+06:00,50,Motorizado
+06:15,102,Motorizado
+06:30,217,Motorizado
+06:45,304,Motorizado
+07:00,332,Motorizado
+07:15,260,Motorizado
+07:30,230,Motorizado
+07:45,305,Motorizado
+08:00,281,Motorizado
+08:15,245,Motorizado
+08:30,243,Motorizado
+08:45,218,Motorizado
+09:00,183,Motorizado
+09:15,187,Motorizado
+09:30,207,Motorizado
+09:45,206,Motorizado
+10:00,208,Motorizado
+10:15,196,Motorizado
+10:30,206,Motorizado
+10:45,207,Motorizado
+11:00,274,Motorizado
+11:15,238,Motorizado
+11:30,253,Motorizado
+11:45,305,Motorizado
+12:00,263,Motorizado
+12:15,208,Motorizado
+12:30,205,Motorizado
+12:45,278,Motorizado
+13:00,277,Motorizado
+13:15,252,Motorizado
+13:30,249,Motorizado
+13:45,293,Motorizado
+14:00,274,Motorizado
+14:15,287,Motorizado
+14:30,199,Motorizado
+14:45,254,Motorizado
+15:00,213,Motorizado
+15:15,212,Motorizado
+15:30,273,Motorizado
+15:45,212,Motorizado
+16:00,253,Motorizado
+16:15,234,Motorizado
+16:30,230,Motorizado
+16:45,303,Motorizado
+17:00,291,Motorizado
+17:15,246,Motorizado
+17:30,281,Motorizado
+17:45,268,Motorizado
+18:00,305,Motorizado
+18:15,246,Motorizado
+18:30,266,Motorizado
+18:45,241,Motorizado
+19:00,180,Motorizado
+19:15,198,Motorizado
+19:30,193,Motorizado
+19:45,182,Motorizado
+20:00,158,Motorizado
+20:15,160,Motorizado
+20:30,145,Motorizado
+20:45,107,Motorizado
