@@ -37,6 +37,16 @@
 
 
 
+    <br>
+    <span class="key">tags:</span>
+    <span class="val">
+
+        <a href="https://michellymenezes.github.io/portifolio-visualizacao/tags/d3">D3</a>
+
+        <a href="https://michellymenezes.github.io/portifolio-visualizacao/tags/heatmap">Heatmap</a>
+
+    </span>
+
   </div>
   <h1 class="headline" itemprop="headline">Fluxo na sociedade</h1>
   <section class="body" itemprop="articleBody">
@@ -45,7 +55,9 @@
 
 <head>
   <meta charset="utf-8">
-  <title>Barras simples</title>
+  <title>Fluxo na sociedade</title>
+  <script src="http://d3js.org/d3.v2.js"></script>
+
   <script src="https://d3js.org/d3.v4.min.js"></script>
 </head>
 
@@ -53,54 +65,58 @@
   <div class="container">
     <div class="row">
       <h1>O que o fluxo da mobilidade pode nos contar sobre a sociedade?</h1>
+      <h2>Chart 1</h2>
     </div>
-    <div class="row mychart" id="chart1">
+
+    <div class="row mychart1" id="chart1">
+
     </div>
+    <h2>Chart 2</h2>
+    <div class="chart2">
+
+    </div>
+
   </div>
 
   <style>
-    .mychart rect {
-      fill: steelblue;
-    }
 
-    .mychart dot {
-      stroke: #000;
-    }
-
-    .mychart rect:hover {
-      fill: goldenrod;
-    }
-
-    .mychart text {
-      font: 12px sans-serif;
-      text-anchor: left;
-    }
-
-    .mychart tooltip {
-      position: absolute;
-      width: 200px;
-      height: 28px;
-      pointer-events: none;
-    }
-
-    .mychart rect.bordered {
+    .mychart1 rect.bordered {
       stroke: #E6E6E6;
       stroke-width:2px;
     }
 
-    .mychart text.mono {
+    .mychart1 text.mono {
       font-size: 9pt;
       font-family: Consolas, courier;
       fill: #818080;
     }
 
-    .mychart text.axis-grupo {
+    .mychart1 text.axis-grupo {
       fill: #818080;
     }
 
-    .mychart text.axis-horas {
+    .mychart1 text.axis-horas {
       fill: #818080;
-    }`
+    }
+
+
+    .chart2 {
+      font: 10px sans-serif;
+      font-family: Consolas, courier;
+    }
+
+    p {
+      font: 12px helvetica;
+      font-family: Consolas, courier;
+    }
+
+    .axis path, .axis line {
+      fill: none;
+      stroke: #818080;
+      stroke-width: 2px;
+      shape-rendering: crispEdges;
+    }
+
   </style>
 
   <script type="text/javascript">
@@ -135,11 +151,10 @@
           buckets = 9,
           colors = ["#ffffd9","#edf8b1","#c7e9b4","#7fcdbb","#41b6c4","#1d91c0","#225ea8","#253494","#081d58"]; // alternatively colorbrewer.YlGnBu[9];
 
-
-
       /*
        * Prepara onde adicionaremos a visualizacao
        */
+
       var grafico = d3.select('#chart1') // cria elemento <svg> com um <g> dentro
         .append('svg')
           .attr('width', larguraVis + margin.left + margin.right)
@@ -195,12 +210,6 @@
               .attr("height", gridSize)
               .style("fill", function(d) { return pickColor(colors, d.n, d.tipo)});
 
-          cards.transition().duration(1000)
-              .style("fill", function(d) { return colorScale(d.n); });
-
-          cards.select("title").text(function(d) { return d.n; });
-
-          cards.exit().remove();
 
           var legend = grafico.selectAll(".legend")
               .data(colorScale.domain(), function(d) { return d; })
@@ -219,13 +228,213 @@
             .text(function(d) { return "≥ " + Math.round(d); })
             .attr("x", function(d, i) { return legendElementWidth * i; })
             .attr("y", alturaVis + gridSize);
-
-          legend.exit().remove();
-
         });
       };
 
       heatmapChart();
+
+
+
+
+
+
+
+
+      chart("https://raw.githubusercontent.com/michellymenezes/portifolio-visualizacao/master/data/tipos-motor-fluxo-campina-median0.csv", "orange");
+
+      var datearray = [];
+      var colorrange = [];
+
+
+      function chart(csvpath, color) {
+
+        if (color == "blue") {
+          colorrange = ["#045A8D", "#2B8CBE", "#74A9CF", "#A6BDDB", "#D0D1E6", "#F1EEF6"];
+        }
+        else if (color == "pink") {
+          colorrange = ["#980043", "#DD1C77", "#DF65B0", "#C994C7", "#D4B9DA", "#F1EEF6"];
+        }
+        else if (color == "orange") {
+          colorrange = ["#B30000", "#E34A33", "#FC8D59", "#FDBB84", "#FDD49E", "#FEF0D9"];
+        }
+        var strokecolor = colorrange[0];
+
+        var format = d3.time.format("%H:%M");
+
+        var margin = {top: 20, right: 40, bottom: 30, left: 30};
+        //var width = 600- margin.left - margin.right;
+        //var height = 300 - margin.top - margin.bottom;
+        var width = larguraVis;
+        var height = alturaVis;
+
+        var tooltip = d3.select(".chart2")
+            .append("div")
+            .attr("class", "remove")
+            .style("position", "absolute")
+            .style("z-index", "20")
+            .style("visibility", "hidden")
+            .style("top", height*4 + "px")
+            .style("left", width + "px");
+
+        var x = d3.time.scale()
+            .range([0, width]);
+
+        var y = d3.scale.linear()
+            .range([height-10, 0]);
+
+        var z = d3.scale.ordinal()
+            .range(colorrange);
+
+        var xAxis = d3.svg.axis()
+            .scale(x)
+            .orient("bottom")
+            .ticks(d3.time.hours);
+        var yAxis = d3.svg.axis()
+            .scale(y);
+
+        var yAxisr = d3.svg.axis()
+            .scale(y);
+
+        var stack = d3.layout.stack()
+            .offset("silhouette")
+            .values(function(d) { return d.values; })
+            .x(function(d) { return d.date; })
+            .y(function(d) { return d.value; });
+
+        var nest = d3.nest()
+            .key(function(d) { return d.key; });
+
+        var area = d3.svg.area()
+            .interpolate("cardinal")
+            .x(function(d) { return x(d.date); })
+            .y0(function(d) { return y(d.y0); })
+            .y1(function(d) { return y(d.y0 + d.y); });
+
+        var svg = d3.select(".chart2").append("svg")
+            .attr("width", width + margin.left + margin.right)
+            .attr("height", height + margin.top + margin.bottom)
+          .append("g")
+            .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
+
+        var graph = d3.csv(csvpath, function(data) {
+          data.forEach(function(d) {
+            d.date = format.parse(d.date);
+            d.value = +d.value;
+          });
+
+          var layers = stack(nest.entries(data));
+
+          x.domain(d3.extent(data, function(d) { return d.date; }));
+          y.domain([0, d3.max(data, function(d) { return d.y0 + d.y; })]);
+
+          svg.selectAll(".layer")
+              .data(layers)
+              .enter().append("path")
+              .attr("class", "layer")
+              .attr("d", function(d) { return area(d.values); })
+              .style("fill", function(d, i) { return z(i); });
+            var  formatTime = d3.time.format("%H:%M")
+
+          svg.append("g")
+              .attr("class", "x axis")
+              .attr("transform", "translate(0, " + height + ")")
+              .call(d3.axisBottom(
+                d3.scaleLinear()
+                  .domain([6, 20.75])
+                  .rangeRound([0, larguraVis]) // Configure essa escala com domain, range e padding
+
+              ));
+
+          svg.append("g")
+              .attr("class", "y axis")
+              .attr("transform", "translate(" + width + ", 0)")
+              .call(d3.axisRight(
+                d3.scaleLinear()
+                  .domain([305, 0])
+                  .rangeRound([0, alturaVis]) // Configure essa escala com domain, range e padding
+
+              ));
+
+          svg.append("g")
+              .attr("class", "y axis")
+              .call(d3.axisLeft(
+                d3.scaleLinear()
+                  .domain([305, 0])
+                  .rangeRound([0, alturaVis]) // Configure essa escala com domain, range e padding
+
+              ));
+  var pro = 0
+          svg.selectAll(".layer")
+            .attr("opacity", 1)
+            .on("mouseover", function(d, i) {
+              svg.selectAll(".layer").transition()
+              .duration(250)
+              .attr("opacity", function(d, j) {
+                return j != i ? 0.6 : 1;
+            })})
+
+            .on("mousemove", function(d, i) {
+              var mousex = d3.mouse(this);
+              mousex = mousex[0];
+              var invertedx = [x.invert(mousex)].map(formatTime)[0];
+        //      console.log(invertedx);
+        //      invertedx = invertedx.getTime();
+              if(invertedx.substring(3,5) == "00" || invertedx.substring(3,5) == "15" || invertedx.substring(3,5) == "30" || invertedx.substring(3,5) == "45"){
+              var selected = (d.values);
+              for (var k = 0; k < selected.length; k++) {
+
+              //  console.log([selected[k].date].map(formatTime)
+            //  );
+                datearray[k] = [selected[k].date].map(formatTime)[0]
+        //            datearray[k] = datearray[k].getTime();;
+              }
+              var mousedate = datearray.indexOf(invertedx);
+              console.log(datearray);
+              console.log(datearray.indexOf(invertedx));
+              console.log(invertedx);
+
+              pro = d.values[mousedate].value;
+
+              d3.select(this)
+              .classed("hover", true)
+              .attr("stroke", strokecolor)
+              .attr("stroke-width", "0.5px"),
+              tooltip.html( "<p>" + d.key + "<br>" + pro + "</p>" ).style("visibility", "visible");
+        }
+            })
+            .on("mouseout", function(d, i) {
+             svg.selectAll(".layer")
+              .transition()
+              .duration(250)
+              .attr("opacity", "1");
+              d3.select(this)
+              .classed("hover", false)
+              .attr("stroke-width", "0px"), tooltip.html( "<p>" + d.key + "<br>" + pro + "</p>" ).style("visibility", "hidden");
+          })
+          console.log(height);
+          var vertical = d3.select(".chart2")
+                .append("div")
+                .attr("class", "remove")
+                .style("position", "absolute")
+                .style("z-index", "19")
+                .style("width", "1px")
+                .style("height", height+"px")
+                .style("top", height * 4 + "px")
+                .style("bottom", -alturaSVG + "px")
+                .style("right", width  +  "px")
+                .style("background", "#fff");
+
+          d3.select(".chart2")
+              .on("mousemove", function(){
+                 var mousex = d3.mouse(this);
+                 mousex = mousex[0] + 5;
+                 vertical.style("left", mousex + width/2 + margin.right*2 + margin.left - 5  + "px" )})
+              .on("mouseover", function(){
+                var mousex = d3.mouse(this);
+                 mousex = mousex[0] + 5;
+                 vertical.style("left", mousex + width/2 + margin.right*2 + margin.left - 5 + "px" )})
+        });
+      }
 
   </script>
 </body>

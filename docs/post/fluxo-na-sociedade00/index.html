@@ -1,0 +1,172 @@
+<!DOCTYPE html>
+<html lang="en-us">
+<head>
+<meta charset="utf-8">
+<meta name="description" content="">
+<meta name="keywords" content="">
+<meta name="author" content="">
+<meta name="generator" content="Hugo 0.30.2" />
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="stylesheet" href="https://michellymenezes.github.io/portifolio-visualizacao/css/style.css" type="text/css">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Code+Pro:400,700" type="text/css">
+<link rel="alternate" href="https://michellymenezes.github.io/index.xml" type="application/rss+xml" title="Portifólio Visualização">
+<title>Fluxo na sociedade - Portifólio Visualização</title>
+</head>
+<body>
+
+<header>
+  <div class="container clearfix">
+    <a class="path" href="https://michellymenezes.github.io/portifolio-visualizacao/">[Portifólio Visualização]</a>
+    <span class="caret"># _</span>
+    <div class="right">
+      
+    </div>
+  </div>
+</header>
+
+<div class="container">
+
+
+<main role="main" class="article">
+  
+<article class="single" itemscope itemtype="http://schema.org/BlogPosting">
+  <div class="meta">
+
+    <span class="key">published on</span>
+    <span class="val"><time itemprop="datePublished" datetime="2017-12-05">December 05, 2017</time></span>
+
+
+
+  </div>
+  <h1 class="headline" itemprop="headline">Fluxo na sociedade</h1>
+  <section class="body" itemprop="articleBody">
+    <!DOCTYPE html>
+<head>
+  <meta charset="utf-8">
+  <script src="https://d3js.org/d3.v4.min.js"></script>
+  <style>
+    body { margin:0;position:fixed;top:0;right:0;bottom:0;left:0; }
+        h1,h2,p {
+      margin:0px;
+    }
+    svg {
+      margin-top:-40px;
+    }
+  </style>
+  <h1>MQP Majors over time 1990-2015</h1>
+  <h2 id="major">Mouse over</h2>
+  <p>The trend of WPI Major Qualifying Projects, grouped by major over time. The peak in the beginning shows the eCDR submission requirement creation.</p>
+</head>
+
+<body>
+  <script>
+
+
+  d3.csv("https://raw.githubusercontent.com/michellymenezes/portifolio-visualizacao/master/data/tipos-motor-fluxo-campina-median0.csv", function(err, d){
+  if(err) console.log(err);
+  //console.log(d)
+
+  var nested_data = d3.nest()
+		.key(function(d) { return d.date; })
+		.entries(d);
+
+  console.log(nested_data);
+
+  var mqpdata = nested_data.map(function(d){
+    var obj = {
+      month: format(d.key)
+    }
+
+    d.values.forEach(function(v){
+      obj[v.key] = +v.value;
+    })
+
+    return obj;
+  })
+
+  buildStreamGraph(mqpdata);
+
+})
+
+
+function buildStreamGraph(mqpdata) {
+var data = mqpdata;
+
+
+var stack = d3.stack()
+.keys(["Motorizado", "Não motorizado"])
+    .order(d3.stackOrderNone)
+    .offset(d3.stackOffsetWiggle);
+
+var series = stack(data);
+
+var width = 800,
+    height = 500;
+
+var x = d3.scaleTime()
+    .domain(d3.extent(data, function(d){ return d.month; }))
+    .range([100, width]);
+
+// setup axis
+var xAxis = d3.axisBottom(x);
+
+var y = d3.scaleLinear()
+    .domain([0, d3.max(series, function(layer) { return d3.max(layer, function(d){ return d[0] + d[1];}); })])
+    .range([height/2, -200]);
+
+var color = d3.scaleLinear()
+    .range(["#51D0D7", "#31B5BB"]);
+
+var color = d3.scaleOrdinal(d3.schemeCategory20);
+
+
+var area = d3.area()
+    .x(function(d) { console.info('in area function', d); return x(d.data.month); })
+    .y0(function(d) { return y(d[0]); })
+    .y1(function(d) { return y(d[1]); })
+    .curve(d3.curveBasis);
+
+var svg = d3.select("body").append("svg")
+    .attr("width", width)
+    .attr("height", height);
+
+svg.selectAll("path")
+    .data(series)
+    .enter().append("path")
+    .attr("d", area)
+    .style("fill", function() { return color(Math.random()); })
+    .on('mouseover', function(d){
+      d3.select(this).style('fill',d3.rgb( d3.select(this).style("fill") ).brighter());
+  		d3.select("#major").text(d.key);
+    })
+    .on('mouseout', function(d){
+      d3.select(this).style('fill',
+         d3.rgb( d3.select(this).style("fill") ).darker());
+         d3.select("#major").text("Mouse over");
+})
+
+svg.append("g")
+            .attr("class", "axis axis--x")
+            .attr("transform", "translate(0," + (height) + ")")
+            .call(xAxis);
+}
+  </script>
+</body>
+
+  </section>
+</article>
+
+</main>
+
+
+</div>
+
+<footer>
+  <div class="container">
+    <span class="copyright">&copy; 2017  Portifólio Visualização - <a rel="license" href="http://creativecommons.org/licenses/by/4.0/">CC BY 4.0</a></span>
+  </div>
+</footer>
+
+</body>
+</html>
+

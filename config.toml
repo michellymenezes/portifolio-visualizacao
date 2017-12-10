@@ -3,3 +3,4 @@ languageCode = "en-us"
 title = "Portifólio Visualização"
 publishDir = "docs"
 theme = "base16"
+tags = []
