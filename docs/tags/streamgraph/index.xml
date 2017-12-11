@@ -17,7 +17,8 @@
       <pubDate>Tue, 05 Dec 2017 09:34:30 -0300</pubDate>
       
       <guid>https://michellymenezes.github.io/portifolio-visualizacao/post/fluxo-na-sociedade/</guid>
-      <description>Fluxo na sociedade     O que o fluxo da mobilidade pode nos contar sobre a sociedade? Chart 1   Chart 2  Chart 3   Agrupada Empilhada      .mychart1 rect.bordered { stroke: #E6E6E6; stroke-width:2px; } .mychart1 text.mono { font-size: 9pt; font-family: Consolas, courier; fill: #818080; } .mychart1 text.axis-grupo { fill: #818080; } .mychart1 text.axis-horas { fill: #818080; } .chart2 { font: 10px sans-serif; font-family: Consolas, courier; } p { font: 12px helvetica; font-family: Consolas, courier; } .</description>
+      <description>Fluxo na sociedade     O que o fluxo da mobilidade pode nos contar sobre a sociedade?  O fluxo das pessoas e os meios que utilizam para se deslocar pode nos dizer muito a respeito de hábitos, estilo de vida e outras características de uma cidade.
+Em uma coleta realizada pela equipe do Lab Rua foi possível obter dados a respeito da circulação de pessoas ao longo do dia em quatro pontos consideralvelmente movimentados na cidade de Campina Grande.</description>
     </item>
     
   </channel>

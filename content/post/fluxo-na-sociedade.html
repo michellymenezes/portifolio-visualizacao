@@ -20,17 +20,24 @@ draft: false
   <div class="container">
     <div class="row">
       <h1>O que o fluxo da mobilidade pode nos contar sobre a sociedade?</h1>
-      <h2>Chart 1</h2>
+      <p> O fluxo das pessoas e os meios que utilizam para se deslocar pode nos
+        dizer muito a respeito de hábitos, estilo de vida e outras características
+        de uma cidade.</p>
+      <p>Em uma coleta realizada pela equipe do Lab Rua foi possível obter dados
+      a respeito da circulação de pessoas ao longo do dia em quatro pontos consideralvelmente
+    movimentados na cidade de Campina Grande.</p>
+
+      <h2>O transporte na cidade</h2>
     </div>
 
     <div class="row mychart1" id="chart1">
 
     </div>
-    <h2>Chart 2</h2>
+    <h2>O ambiente na cidade</h2>
     <div class="chart2" id="chart2">
 
     </div>
-    <h2>Chart 3</h2>
+    <h2>A liberdade na cidade (?)</h2>
     <div>
     <form>
       <label><input type="radio" name="mode" value="grouped"> Agrupada</label>
@@ -48,17 +55,17 @@ draft: false
       stroke-width:2px;
     }
 
-    .mychart1 text.mono {
+    .mychart1 text {
       font-size: 9pt;
       font-family: Consolas, courier;
       fill: #818080;
     }
 
-    .mychart1 text.axis-grupo {
+    .mychart1 text {
       fill: #818080;
     }
 
-    .mychart1 text.axis-horas {
+    .mychart1 text {
       fill: #818080;
     }
 
@@ -68,7 +75,7 @@ draft: false
       font-family: Consolas, courier;
     }
 
-    p {
+    .chart3 p {
       font: 12px helvetica;
       font-family: Consolas, courier;
     }
@@ -234,17 +241,17 @@ draft: false
           colorrange = ["#980043", "#DD1C77", "#DF65B0", "#C994C7", "#D4B9DA", "#F1EEF6"];
         }
         else if (color == "orange") {
-          colorrange = ["#B30000", "#E34A33", "#FC8D59", "#FDBB84", "#FDD49E", "#FEF0D9"];
+          colorrange = ["#d7191c", "#fdae61", "#FC8D59", "#FDBB84", "#FDD49E", "#FEF0D9"];
         }
         var strokecolor = colorrange[0];
 
         var format = d3.time.format("%H:%M");
 
-        var margin = {top: 20, right: 40, bottom: 30, left: 30};
+        var margin = {top: 50, right: 40, bottom: 100, left: 30};
         //var width = 600- margin.left - margin.right;
         //var height = 300 - margin.top - margin.bottom;
-        var width = larguraVis;
-        var height = alturaVis;
+        var width = 600 - margin.left - margin.right;;
+        var height = alturaSVG - margin.top - margin.bottom;;
 
         var tooltip = d3.select(".chart2")
             .append("div")
@@ -320,7 +327,7 @@ draft: false
               .call(d3.axisBottom(
                 d3.scaleLinear()
                   .domain([6, 20.75])
-                  .rangeRound([0, larguraVis]) // Configure essa escala com domain, range e padding
+                  .rangeRound([0, width]) // Configure essa escala com domain, range e padding
 
               ));
 
@@ -330,7 +337,7 @@ draft: false
               .call(d3.axisRight(
                 d3.scaleLinear()
                   .domain([305, 0])
-                  .rangeRound([0, alturaVis]) // Configure essa escala com domain, range e padding
+                  .rangeRound([0, height]) // Configure essa escala com domain, range e padding
 
               ));
 
@@ -339,10 +346,40 @@ draft: false
               .call(d3.axisLeft(
                 d3.scaleLinear()
                   .domain([305, 0])
-                  .rangeRound([0, alturaVis]) // Configure essa escala com domain, range e padding
+                  .rangeRound([0, height]) // Configure essa escala com domain, range e padding
 
               ));
-  var pro = 0
+
+
+          var legendElementWidth = Math.floor(((width - margin.left) / 2)),
+          gridSize = Math.floor(width / 15);
+
+
+          var colorScale = d3.scaleThreshold()
+              .domain(["Não motorizados", "Motorizados"])
+              .range([0].concat(colors));
+
+
+          var legend = svg.selectAll(".legend")
+              .data(colorScale.domain(), function(d) { return d; })
+              .enter().append("g")
+              .attr("class", "legend");
+
+          var colorrange = ["#d7191c", "#fdae61", "#FC8D59", "#FDBB84", "#FDD49E", "#FEF0D9"];
+
+          legend.append("rect")
+            .attr("x", function(d, i) { return (legendElementWidth * i) + margin.left; })
+            .attr("y", height + 30)
+            .attr("width", legendElementWidth)
+            .attr("height", gridSize / 2)
+            .style("fill", function(d, i) {console.log(colorrange); return colorrange[i]});
+
+          legend.append("text")
+            .attr("class", "mono")
+            .text(function(d) { return d; })
+            .attr("x", function(d, i) { return (legendElementWidth * i)+ margin.left; })
+            .attr("y", height + 70);
+  //var pro = 0
           svg.selectAll(".layer")
             .attr("opacity", 1)
             .on("mouseover", function(d, i) {
@@ -352,66 +389,62 @@ draft: false
                 return j != i ? 0.6 : 1;
             })})
 
-            .on("mousemove", function(d, i) {
-              var mousex = d3.mouse(this);
-              mousex = mousex[0];
-              var invertedx = [x.invert(mousex)].map(formatTime)[0];
-        //      console.log(invertedx);
-        //      invertedx = invertedx.getTime();
-              if(invertedx.substring(3,5) == "00" || invertedx.substring(3,5) == "15" || invertedx.substring(3,5) == "30" || invertedx.substring(3,5) == "45"){
-              var selected = (d.values);
-              for (var k = 0; k < selected.length; k++) {
-
-              //  console.log([selected[k].date].map(formatTime)
-            //  );
-                datearray[k] = [selected[k].date].map(formatTime)[0]
-        //            datearray[k] = datearray[k].getTime();;
-              }
-              var mousedate = datearray.indexOf(invertedx);
-              console.log(datearray);
-              console.log(datearray.indexOf(invertedx));
-              console.log(invertedx);
-
-              pro = d.values[mousedate].value;
-
-              d3.select(this)
-              .classed("hover", true)
-              .attr("stroke", strokecolor)
-              .attr("stroke-width", "0.5px"),
-              tooltip.html( "<p>" + d.key + "<br>" + pro + "</p>" ).style("visibility", "visible");
-        }
-            })
-            .on("mouseout", function(d, i) {
-             svg.selectAll(".layer")
-              .transition()
-              .duration(250)
-              .attr("opacity", "1");
-              d3.select(this)
-              .classed("hover", false)
-              .attr("stroke-width", "0px"), tooltip.html( "<p>" + d.key + "<br>" + pro + "</p>" ).style("visibility", "hidden");
-          })
-          console.log(height);
-          var vertical = d3.select(".chart2")
-                .append("div")
-                .attr("class", "remove")
-                .style("position", "absolute")
-                .style("z-index", "19")
-                .style("width", "1px")
-                .style("height", height+"px")
-                .style("top", height * 4 + "px")
-                .style("bottom", -alturaSVG + "px")
-                .style("right", width  +  "px")
-                .style("background", "#fff");
-
-          d3.select(".chart2")
-              .on("mousemove", function(){
-                 var mousex = d3.mouse(this);
-                 mousex = mousex[0] + 5;
-                 vertical.style("left", mousex + width/2 + margin.right*2 + margin.left - 5  + "px" )})
-              .on("mouseover", function(){
-                var mousex = d3.mouse(this);
-                 mousex = mousex[0] + 5;
-                 vertical.style("left", mousex + width/2 + margin.right*2 + margin.left - 5 + "px" )})
+        //     .on("mousemove", function(d, i) {
+        //       var mousex = d3.mouse(this);
+        //       mousex = mousex[0];
+        //       var invertedx = [x.invert(mousex)].map(formatTime)[0];
+        // //      console.log(invertedx);
+        // //      invertedx = invertedx.getTime();
+        //       if(invertedx.substring(3,5) == "00" || invertedx.substring(3,5) == "15" || invertedx.substring(3,5) == "30" || invertedx.substring(3,5) == "45"){
+        //       var selected = (d.values);
+        //       for (var k = 0; k < selected.length; k++) {
+        //
+        //     //  );
+        //         datearray[k] = [selected[k].date].map(formatTime)[0]
+        //       }
+        //       var mousedate = datearray.indexOf(invertedx);
+        //
+        //
+        //       pro = d.values[mousedate].value;
+        //
+        //       d3.select(this)
+        //       .classed("hover", true)
+        //       .attr("stroke", strokecolor)
+        //       .attr("stroke-width", "0.5px"),
+        //       tooltip.html( "<p>" + d.key + "<br>" + pro + "</p>" ).style("visibility", "visible");
+        // }
+        //     })
+             .on("mouseout", function(d, i) {
+              svg.selectAll(".layer")
+               .transition()
+               .duration(250)
+               .attr("opacity", "1");
+        //       d3.select(this)
+        //       .classed("hover", false)
+        //       .attr("stroke-width", "0px"), tooltip.html( "<p>" + d.key + "<br>" + pro + "</p>" ).style("visibility", "hidden");
+           })
+      //    console.log(height);
+          // var vertical = d3.select(".chart2")
+          //       .append("div")
+          //       .attr("class", "remove")
+          //       .style("position", "absolute")
+          //       .style("z-index", "19")
+          //       .style("width", "1px")
+          //       .style("height", height+"px")
+          //       .style("top", height * 4 + "px")
+          //       .style("bottom", -alturaSVG + "px")
+          //       .style("right", width  +  "px")
+          //       .style("background", "#fff");
+          //
+          // d3.select(".chart2")
+          //     .on("mousemove", function(){
+          //        var mousex = d3.mouse(this);
+          //        mousex = mousex[0] + 5;
+          //        vertical.style("left", mousex + width/2 + margin.right*2 + margin.left - 5  + "px" )})
+          //     .on("mouseover", function(){
+          //       var mousex = d3.mouse(this);
+          //        mousex = mousex[0] + 5;
+          //        vertical.style("left", mousex + width/2 + margin.right*2 + margin.left - 5 + "px" )})
         });
       }
 
@@ -450,7 +483,7 @@ draft: false
             //  console.log(y01z);
 
           var svg = d3.select("#chart3").append('svg'),
-              margin = {top: 40, right: 30, bottom: 100, left: 20},
+              margin = {top: 50, right: 30, bottom: 100, left: 20},
               width = 550 - margin.left  - margin.right,
               height = alturaSVG - margin.top - margin.bottom,
               g = svg
@@ -467,9 +500,12 @@ draft: false
                   .domain([0, y1Max])
                   .range([height, 0]);
 
+              var colors = ["#d7191c", "#fdae61", "#2b83ba", "#abdda4"]
+
+
               var color = d3.scaleOrdinal()
                   .domain(d3.range(n))
-                  .range(d3.schemeCategory20);
+                  .range(colors);
 
               var series = g.selectAll(".series")
                 .data(y01z)
@@ -565,12 +601,14 @@ draft: false
                   .enter().append("g")
                   .attr("class", "legend");
 
+              var colors = ["#d7191c", "#fdae61", "#2b83ba", "#abdda4"]
+
               legend.append("rect")
                 .attr("x", function(d, i) { return (legendElementWidth * i) + margin.left; })
                 .attr("y", height + 30)
                 .attr("width", legendElementWidth)
                 .attr("height", gridSize / 2)
-                .style("fill", d3.scale.category20() );
+                .style("fill", function(d,i){return colors[i]});
 
               legend.append("text")
                 .attr("class", "mono")
