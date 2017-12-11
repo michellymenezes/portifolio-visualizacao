@@ -3,17 +3,25 @@ dados = read.csv("fluxo-campina.csv") %>%
   select(horario_inicial, carros, motos, onibus, caminhoes, total_ciclistas, total_pedestres) %>%
   mutate(horario_inicial = substr(horario_inicial, 1, 2))
 
+dados1 = read.csv("fluxo-campina.csv") %>%
+  select(horario_inicial, carros, motos, onibus, caminhoes, total_ciclistas, total_pedestres, local) %>%
+  mutate(horario_inicial = substr(horario_inicial, 1, 2))
+
+
 dados2 = read.csv("fluxo-campina.csv") %>%
   select(horario_inicial, carros, motos, onibus, caminhoes, total_ciclistas, total_pedestres, local) 
 
 
 library(reshape2)
-n_dados <- melt(dados, id=c("horario_inicial")) %>%
+n_dados <- melt(dados1, id=c("horario_inicial", "local")) %>%
+  group_by(horario_inicial, variable, local) %>%
+  summarise(value = sum(value)) %>%
   group_by(horario_inicial, variable) %>%
-  summarise(value = mean(value))
+  summarise(value = median(value))
+  
 
 names(n_dados) = c("hora", "tipo", "n")
-write_csv(n_dados, "tipos-fluxo-campina-mean.csv")
+write_csv(n_dados, "tipos-fluxo-campina-sum-median.csv")
 
 n_dados <- melt(dados, id=c("horario_inicial")) %>%
   group_by(horario_inicial, variable) %>%
