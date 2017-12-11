@@ -19,7 +19,7 @@ draft: false
 <body>
   <div class="container">
     <div class="row">
-      <h1>O que o fluxo da mobilidade pode nos contar sobre a sociedade?</h1>
+      <h1>O que o fluxo e mobilidade pode nos contar sobre a sociedade?</h1>
       <p> O fluxo das pessoas e os meios que utilizam para se deslocar pode nos
         dizer muito a respeito de hábitos, estilo de vida e outras características
         de uma cidade.</p>
@@ -34,13 +34,28 @@ draft: false
     <p>Foram observados 6 diferentes meios de transporte fazendo parte do fluxo
       nesses pontos: carro, moto, onibus, caminhão, bicicleta e a caminhada comum.
       Podemos observar no gráfico abaixo a frequência contabilizada para cada horário
-      do dia. Cada valor foi calculado com base na mediana dos valores de todos
-      os ponto de observação para cada hora específica. </p>
+      do dia.</p>
+    <p>Para cada hora do dia, para cada ponto de observação, foi somada a frquência
+    de cada meio utilizado. Após isso, para cada hora foi calculada a mediana
+    utilizando as somas de cada ponto.</p>
 
-    <h3>Frequância de transportes a cada hora do dia.</h3>
     <div class="row mychart1" id="chart1">
-
     </div>
+
+    <h4>O que podemos entender:</h4>
+    <p><li type="disc">Carros, motos e pedestres são os mais frequentes. Em todos
+    os momentos observados eles foram contabilizados no mínimo 70 aparições de
+    cada um deles.</li></p>
+    <p><li type="disc">Pedrestes são os únicos que chegam a ultrapassar a
+    contagem de 800. Porém, diferente dos carros que não variam muito em números,
+    estes apresentam picos no início e no fim do dia. </li></p>
+    <p><li type="disc">Caminhões, ônibus e ciclistas apresentam uma menor frequência
+    ao longo do dia, principalmente os dois primeiros. Ônibus e caminhões não
+    chegam à marca de 50 observações em nenhum momento do dia.</li></p>
+    <p><li type="disc">Ciclistas apresentam um comportamento semelhante ao dos
+    pedestres com picos no início e fim do dia. Isso muito provavelmente descreve
+    o momento que pessoas utilizam para a prática de exercícios.</li></p>
+
     <h2>O ambiente na cidade</h2>
     <div class="chart2" id="chart2">
 
@@ -131,8 +146,17 @@ draft: false
       }
 
       function pickColor(colors, n, tipo){
-        n = Math.floor(n/205*9);
-        return colors[n]
+    //    n = Math.floor(n/850*9);
+        var k = 0;
+        if(n >= 20) k += 1;
+        if(n >= 50) k += 1;
+        if(n >= 70) k += 1;
+        if(n >= 100) k += 1;
+        if(n >= 250) k += 1;
+        if(n >= 400) k += 1;
+        if(n >= 550) k += 1;
+        if(n >= 800) k += 1;
+        return colors[k]
       }
       // Preencha aqui.
 
@@ -178,7 +202,7 @@ draft: false
 
 
       var heatmapChart = function() {
-        d3.csv("https://raw.githubusercontent.com/michellymenezes/portifolio-visualizacao/master/data/tipos-fluxo-campina-median.csv",
+        d3.csv("https://raw.githubusercontent.com/michellymenezes/portifolio-visualizacao/master/data/tipos-fluxo-campina-sum-median.csv",
 
         function(error, dados) {
           // var colorScale = d3.scaleQuantile()
@@ -186,7 +210,7 @@ draft: false
           //     .range(colors);
 
           var colorScale = d3.scaleThreshold()
-              .domain([0, 10, 30, 70, 100, 120, 150, 170, 190])
+              .domain([0, 20, 50, 70, 100, 250, 400, 550, 800])
               .range([0].concat(colors));
 
           var cards = grafico.selectAll(".hour")
