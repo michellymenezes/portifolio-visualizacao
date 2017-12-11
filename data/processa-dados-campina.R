@@ -63,9 +63,11 @@ write_csv(n_dados, "tipos-motor-fluxo-campina-median.csv")
 
 
 n_dados = melt(read.csv("fluxo-campina.csv") %>% 
-                 select(horario_inicial, mulheres_ciclistas, mulheres_pedestres, homens_pedestres, homens_ciclistas),
-               id=c("horario_inicial")) %>% 
+                 select(horario_inicial, mulheres_ciclistas, mulheres_pedestres, homens_pedestres, homens_ciclistas, local),
+               id=c("horario_inicial", "local")) %>% 
   mutate(horario_inicial = substr(horario_inicial, 1, 2)) %>%
+  group_by(horario_inicial, variable, local) %>% 
+  summarise(value = sum(value)) %>%
   group_by(horario_inicial, variable) %>% 
   summarise(value = median(value))
 names(n_dados) = c("hora", "tipo", "n")
