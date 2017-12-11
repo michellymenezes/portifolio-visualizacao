@@ -18,6 +18,12 @@
   </url>
   
   <url>
+    <loc>https://michellymenezes.github.io/portifolio-visualizacao/tags/barchart/</loc>
+    <lastmod>2017-12-05T09:34:30-03:00</lastmod>
+    <priority>0</priority>
+  </url>
+  
+  <url>
     <loc>https://michellymenezes.github.io/portifolio-visualizacao/categories/</loc>
     <priority>0</priority>
   </url>
@@ -42,6 +48,18 @@
   
   <url>
     <loc>https://michellymenezes.github.io/portifolio-visualizacao/post/</loc>
+    <lastmod>2017-12-05T09:34:30-03:00</lastmod>
+    <priority>0</priority>
+  </url>
+  
+  <url>
+    <loc>https://michellymenezes.github.io/portifolio-visualizacao/tags/scatterplot/</loc>
+    <lastmod>2017-11-27T09:15:51-03:00</lastmod>
+    <priority>0</priority>
+  </url>
+  
+  <url>
+    <loc>https://michellymenezes.github.io/portifolio-visualizacao/tags/streamgraph/</loc>
     <lastmod>2017-12-05T09:34:30-03:00</lastmod>
     <priority>0</priority>
   </url>

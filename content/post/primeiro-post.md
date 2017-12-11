@@ -2,7 +2,7 @@
 title: "Primeiro Post - Açude Epitácio Pessoa"
 date: 2017-11-14T20:34:26-03:00
 draft: false
-tags: [Vega-Lite]
+tags: [Vega-Lite, barchart, heatmap, scatterplot]
 ---
 
 # Uma análise sobre o Açude Epitácio Pessoa (Boqueirão)

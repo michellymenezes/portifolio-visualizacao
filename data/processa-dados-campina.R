@@ -52,3 +52,26 @@ n_dados = n_dados %>% rbind(n_dados_motor)
 
 names(n_dados) = c("hora", "n", "tipo")
 write_csv(n_dados, "tipos-motor-fluxo-campina-median.csv")
+
+
+n_dados = melt(read.csv("fluxo-campina.csv") %>% 
+                 select(horario_inicial, mulheres_ciclistas, mulheres_pedestres, homens_pedestres, homens_ciclistas),
+               id=c("horario_inicial")) %>% 
+  mutate(horario_inicial = substr(horario_inicial, 1, 2)) %>%
+  group_by(horario_inicial, variable) %>% 
+  summarise(value = median(value))
+names(n_dados) = c("hora", "tipo", "n")
+write_csv(n_dados, "fluxo-homens-mulheres-median.csv")
+
+
+
+# dados = read.csv("fluxo-campina.csv") %>%
+#   select(horario_inicial, total_pedestres, local) %>%
+#   mutate(horario_inicial = substr(horario_inicial, 1, 2)) %>%
+#   group_by(horario_inicial, local) %>%
+#   summarise(total_pedestres = mean(total_pedestres)) %>%
+#   ungroup() %>%
+#   mutate(horario_inicial = paste(horario_inicial, ":00", sep = ""))
+# write_csv(dados, "media-pessoas-lugares.csv")
+
+
