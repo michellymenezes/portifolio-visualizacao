@@ -11,9 +11,9 @@ draft: false
 <head>
   <meta charset="utf-8">
   <title>Fluxo na sociedade</title>
-  <script src="https://d3js.org/d3.v2.js"></script>
+  <!-- <script src="https://d3js.org/d3.v2.js"></script> -->
 
-  <script src="https://d3js.org/d3.v4.min.js"></script>
+  <script src="https://d3js.org/d3.v4.js"></script>
 </head>
 
 <body>
@@ -330,7 +330,7 @@ draft: false
         }
         var strokecolor = colorrange[0];
 
-        var format = d3.time.format("%H:%M");
+        var format = d3.timeParse("%H:%M");
 
         var margin = {top: 50, right: 40, bottom: 100, left: 30};
         //var width = 600- margin.left - margin.right;
@@ -347,26 +347,25 @@ draft: false
             .style("top", height*4 + "px")
             .style("left", width + "px");
 
-        var x = d3.time.scale()
+        var x = d3.scaleTime()
             .range([0, width]);
 
-        var y = d3.scale.linear()
+        var y = d3.scaleLinear()
             .range([height-10, 0]);
 
-        var z = d3.scale.ordinal()
+        var z = d3.scaleOrdinal()
             .range(colorrange);
 
-        var xAxis = d3.svg.axis()
+        var xAxis = d3.axisBottom()
             .scale(x)
-            .orient("bottom")
-            .ticks(d3.time.hours);
-        var yAxis = d3.svg.axis()
+            .ticks(d3.timeHours);
+        var yAxis = d3.axisLeft()
             .scale(y);
 
-        var yAxisr = d3.svg.axis()
+        var yAxisr = d3.axisRight()
             .scale(y);
 
-        var stack = d3.layout.stack()
+        var stack = d3.stack()
             .offset("silhouette")
             .values(function(d) { return d.values; })
             .x(function(d) { return d.date; })
