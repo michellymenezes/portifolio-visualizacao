@@ -366,16 +366,16 @@ draft: false
             .scale(y);
 
         var stack = d3.stack()
-            .offset("silhouette")
-            .values(function(d) { return d.values; })
-            .x(function(d) { return d.date; })
-            .y(function(d) { return d.value; });
+            .keys(function(d) { console.log(d); return d.values; });
+            // .d3.stackOffsetSilhouette()
+            // .x(function(d) { return d.date; })
+            // .y(function(d) { return d.value; });
 
         var nest = d3.nest()
             .key(function(d) { return d.key; });
 
-        var area = d3.svg.area()
-            .interpolate("cardinal")
+        var area = d3.area()
+            .curve(d3.curveCardinal)
             .x(function(d) { return x(d.date); })
             .y0(function(d) { return y(d.y0); })
             .y1(function(d) { return y(d.y0 + d.y); });
@@ -388,7 +388,7 @@ draft: false
 
         var graph = d3.csv(csvpath, function(data) {
           data.forEach(function(d) {
-            d.date = format.parse(d.date);
+            d.date = format(d.date);
             d.value = +d.value;
           });
 
