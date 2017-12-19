@@ -91,6 +91,10 @@
 
     <div class="row mychart1" id="chart1">
     </div>
+    <div id="tooltip" class="hidden">
+         <p id="titulo_tooltip"></p>
+			   <p><b id="value">0</b></p>
+		 </div>
 
     <h4>O que podemos entender:</h4>
     <p><li type="disc">Carros, motos e pedestres são os mais frequentes. Em todos
@@ -174,6 +178,26 @@
   </div>
 
   <style>
+
+  #tooltip {
+  position: absolute;
+  width: auto;
+  height: auto;
+  padding: 10px;
+  background-color: #D3F6DB;
+  border-radius: 10px;
+}
+
+#tooltip.hidden {
+  display: none;
+}
+
+#tooltip p {
+  margin: 0;
+  font-family: sans-serif;
+  font-size: 12px;
+  line-height: 20px;
+}
 
     .mychart1 rect.bordered {
       stroke: #E6E6E6;
@@ -315,12 +339,12 @@
               .domain([0, 20, 50, 70, 100, 250, 400, 550, 800])
               .range([0].concat(colors));
 
-          var cards = grafico.selectAll(".hour")
+          var cards = grafico.selectAll("rect")
               .data(dados);
 
-          cards.append("title");
+      //    cards.append("title");
 
-          cards.enter().append("rect")
+          cards = cards.enter().append("rect")
               .attr("x", function(d) { return (d.hora - 6) * gridSize; })
               .attr("y", function(d) { return (tipoToNum(d.tipo)) * gridSize; })
               .attr("rx", 4)
@@ -329,6 +353,39 @@
               .attr("width", gridSize)
               .attr("height", gridSize)
               .style("fill", function(d) { return pickColor(colors, d.n, d.tipo)});
+
+          /*
+           * Eventos
+           */
+          grafico.selectAll(".hour").on("mouseover", mouseDentro);
+
+          function mouseDentro(d){
+            console.log("mouseover");
+
+            d3.selectAll(".hour")
+             .style("fill",
+                     p => (p.hora === d.hora && p.tipo === d.tipo)? "gold" : d => pickColor(colors, d.hora, d.tipo));
+
+            d3.select("#tooltip") // reparou que tem uma div escondida no html?
+  						.style("left", (d3.event.pageX - 50) + "px")
+  						.style("top", d3.event.pageY + "px")
+  						.select("#value")
+  						.text("texto");
+
+             d3.select("#tooltip #titulo_tooltip")
+               .text("texto");
+  					// Mostra o tooltip
+  					d3.select("#tooltip").classed("hidden", false);
+          }
+
+          grafico.selectAll(".hour").on("mouseout", mouseSaiu);
+          function mouseSaiu(d){
+            d3.selectAll(".hour")
+             .style("fill",function(d) { return pickColor(colors, d.n, d.tipo)});
+
+            d3.select("#tooltip").classed("hidden", true);
+
+          }
 
 
           var legend = grafico.selectAll(".legend")
