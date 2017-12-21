@@ -89,8 +89,11 @@
     de cada meio utilizado. Após isso, para cada hora foi calculada a mediana
     utilizando as somas de cada ponto.</p>
 
+
     <div class="row mychart1" id="chart1">
+<div id="controls"></div >
     </div>
+
     <div id="tooltip" class="hidden">
          <p id="titulo_tooltip"></p>
 			   <p><b id="value">0</b></p>
@@ -272,6 +275,7 @@
       }
 
       function pickColor(colors, n, tipo){
+    //    console.log(tipo, n);
     //    n = Math.floor(n/850*9);
         var k = 0;
         if(n >= 20) k += 1;
@@ -328,7 +332,7 @@
 
 
       var heatmapChart = function() {
-        d3.csv("https://raw.githubusercontent.com/michellymenezes/portifolio-visualizacao/master/data/tipos-fluxo-campina-sum-median.csv",
+        d3.csv("https://raw.githubusercontent.com/michellymenezes/portifolio-visualizacao/master/data/tipos-fluxo-campina-lugares-sum-median.csv",
 
         function(error, dados) {
           // var colorScale = d3.scaleQuantile()
@@ -340,7 +344,8 @@
               .range([0].concat(colors));
 
           var cards = grafico.selectAll("rect")
-              .data(dados);
+              .data(dados.filter(d => d.local == "todos"));
+          console.log(dados);
 
       //    cards.append("title");
 
@@ -360,7 +365,6 @@
           grafico.selectAll(".hour").on("mouseover", mouseDentro);
 
           function mouseDentro(d){
-            console.log("mouseover");
 
             d3.selectAll(".hour")
              .style("fill",
@@ -370,10 +374,10 @@
   						.style("left", (d3.event.pageX - 50) + "px")
   						.style("top", d3.event.pageY + "px")
   						.select("#value")
-  						.text("texto");
+  						.text(d.n);
 
              d3.select("#tooltip #titulo_tooltip")
-               .text("texto");
+               .text(d.tipo);
   					// Mostra o tooltip
   					d3.select("#tooltip").classed("hidden", false);
           }
@@ -386,6 +390,33 @@
             d3.select("#tooltip").classed("hidden", true);
 
           }
+
+          const dataKeys = ["todos", "bobs", "burrinhos", "jackson"]
+
+          d3.select("#controls").selectAll("button.teams")
+            .data(dataKeys)
+            .enter()
+              .append("button")
+              .attr("class", "btn-default")
+               .on("click", mudaDimensao)
+               .html(d => d);
+
+         function mudaDimensao(dimensao) {
+           var dadosFiltrados = dados.filter(d => d.local === dimensao);
+          //  selectAll(elementosDoDOM)
+          //     .data(dadosFiltrados)
+          //     .attr(...)
+          //
+
+           cards = grafico.selectAll(".hour")
+            .data(dadosFiltrados)
+            // .style("fill", "red")
+            .style("fill",function(d) { console.log(d.n); return pickColor(colors, d.n, d.tipo)});
+
+          console.log(cards);
+
+         }
+
 
 
           var legend = grafico.selectAll(".legend")
@@ -563,7 +594,7 @@
             .attr("y", height + 30)
             .attr("width", legendElementWidth)
             .attr("height", gridSize / 2)
-            .style("fill", function(d, i) {console.log(colorrange); return colorrange[i]});
+            .style("fill", function(d, i) { return colorrange[i]});
 
           legend.append("text")
             .attr("class", "mono")
@@ -643,7 +674,7 @@
 
 
 
-      barchart();
+    //  barchart();
 
       function barchart() {
         d3.csv("https://raw.githubusercontent.com/michellymenezes/portifolio-visualizacao/master/data/fluxo-homens-mulheres-median.csv",
@@ -664,7 +695,6 @@
           // The yz array has n elements, representing the y-values of each of the n series.
           // Each yz[i] is an array of m non-negative numbers representing a y-value for xz[i].
           // The y01z array has the same structure as yz, but with stacked [y₀, y₁] instead of y.
-          console.log(dados);
           var xz = mm,
               yz = d3.range(n).map(function(e) { return bumps(tipos[e], dados); }),
               y01z = d3.stack().keys(d3.range(n))(d3.transpose(yz)),
@@ -822,7 +852,6 @@
                 n = n +1;
               }
             }
-            console.log(values);
 
             return values;
           }
