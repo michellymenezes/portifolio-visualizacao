@@ -13,6 +13,22 @@ dados2 = read.csv("fluxo-campina.csv") %>%
 
 
 library(reshape2)
+library(readr)
+n_dados <- melt(dados1, id=c("horario_inicial", "local")) %>%
+  group_by(horario_inicial, variable, local) %>%
+  summarise(value = sum(value)) 
+n_dados = n_dados %>% rbind(n_dados %>%
+  mutate(local = "todos") %>%
+  group_by(horario_inicial, variable, local) %>%
+  summarise(value = median(value)))
+
+
+names(n_dados) = c("hora", "tipo", "local", "n")
+write_csv(n_dados, "tipos-fluxo-campina-lugares-sum-median.csv")
+
+
+
+
 n_dados <- melt(dados1, id=c("horario_inicial", "local")) %>%
   group_by(horario_inicial, variable, local) %>%
   summarise(value = sum(value)) %>%

@@ -321,10 +321,10 @@ draft: false
   						.style("left", (d3.event.pageX - 50) + "px")
   						.style("top", d3.event.pageY + "px")
   						.select("#value")
-  						.text("texto");
+  						.text(d.n);
 
              d3.select("#tooltip #titulo_tooltip")
-               .text("texto");
+               .text(d.tipo);
   					// Mostra o tooltip
   					d3.select("#tooltip").classed("hidden", false);
           }
