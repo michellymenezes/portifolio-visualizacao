@@ -37,8 +37,9 @@ draft: false
       Podemos observar no gráfico abaixo a frequência contabilizada para cada horário
       do dia.</p>
     <p>Para cada hora do dia, para cada ponto de observação, foi somada a frquência
-    de cada meio utilizado. Após isso, para cada hora foi calculada a mediana
-    utilizando as somas de cada ponto.</p>
+    de cada meio utilizado. Você pode clicar nas opções de lugares para observar a
+    contagem separadamente ou selecionar a opção "todos", que é a mediana
+    utilizando as somas de cada ponto e dá uma visão geral sobre o fluxo.</p>
 
 
     <div class="row mychart1" id="chart1">
@@ -50,7 +51,7 @@ draft: false
 			   <p><b id="value">0</b></p>
 		 </div>
 
-    <h4>O que podemos entender:</h4>
+    <h4>O que podemos entender sobre a opção "todos":</h4>
     <p><li type="disc">Carros, motos e pedestres são os mais frequentes. Em todos
     os momentos observados eles foram contabilizados no mínimo 70 aparições de
     cada um deles.</li></p>
@@ -290,13 +291,15 @@ draft: false
           //     .domain([0, buckets - 1, d3.max(dados, function (d) { return d.n; })])
           //     .range(colors);
 
+          var dimensao = "todos"
+
           var colorScale = d3.scaleThreshold()
               .domain([0, 20, 50, 70, 100, 250, 400, 550, 800])
               .range([0].concat(colors));
 
           var cards = grafico.selectAll("rect")
               .data(dados.filter(d => d.local == "todos"));
-          console.log(dados);
+
 
       //    cards.append("title");
 
@@ -319,7 +322,7 @@ draft: false
 
             d3.selectAll(".hour")
              .style("fill",
-                     p => (p.hora === d.hora && p.tipo === d.tipo)? "gold" : d => pickColor(colors, d.hora, d.tipo));
+                     p => (p.hora === d.hora && p.tipo === d.tipo)? "#fdae61" : d => pickColor(colors, d.hora, d.tipo));
 
             d3.select("#tooltip") // reparou que tem uma div escondida no html?
   						.style("left", (d3.event.pageX - 50) + "px")
@@ -328,7 +331,7 @@ draft: false
   						.text(d.n);
 
              d3.select("#tooltip #titulo_tooltip")
-               .text(d.tipo);
+               .text(`${d.tipo} - ${dimensao}`);
   					// Mostra o tooltip
   					d3.select("#tooltip").classed("hidden", false);
           }
@@ -352,23 +355,16 @@ draft: false
                .on("click", mudaDimensao)
                .html(d => d);
 
-         function mudaDimensao(dimensao) {
-           var dadosFiltrados = dados.filter(d => d.local === dimensao);
-          //  selectAll(elementosDoDOM)
-          //     .data(dadosFiltrados)
-          //     .attr(...)
-          //
+         function mudaDimensao(dimensaoSelecionada) {
+           dimensao = dimensaoSelecionada;
+           var dadosFiltrados = dados.filter(d => d.local === dimensaoSelecionada);
+
 
            cards = grafico.selectAll(".hour")
             .data(dadosFiltrados)
-            // .style("fill", "red")
-            .style("fill",function(d) { console.log(d.n); return pickColor(colors, d.n, d.tipo)});
-
-          console.log(cards);
-
+            .transition().duration(100).delay((d,i) => i * 10)
+            .style("fill",function(d) { return pickColor(colors, d.n, d.tipo)});
          }
-
-
 
           var legend = grafico.selectAll(".legend")
               .data(colorScale.domain(), function(d) { return d; })
@@ -625,7 +621,7 @@ draft: false
 
 
 
-    //  barchart();
+      barchart();
 
       function barchart() {
         d3.csv("https://raw.githubusercontent.com/michellymenezes/portifolio-visualizacao/master/data/fluxo-homens-mulheres-median.csv",
