@@ -279,8 +279,8 @@ draft: false
 
       var grafico = d3.select('#chart1') // cria elemento <svg> com um <g> dentro
         .append('svg')
-          .attr('width', larguraVis + margin.left + margin.right)
-          .attr('height', alturaVis + margin.top + margin.bottom)
+        .attr('viewBox', '0 0 '+(larguraVis + margin.left + margin.right)+' '+(alturaVis + margin.top + margin.bottom))
+        .attr('width', '100%')
         .append('g') // para entender o <g> vá em x03-detalhes-svg.html
           .attr('transform', 'translate(' +  margin.left + ',' + margin.top + ')');
 
@@ -521,8 +521,8 @@ draft: false
             .y1(function(d) { return y(d.y0 + d.y); });
 
         var svg = d3.select(".chart2").append("svg")
-            .attr("width", width + margin.left + margin.right)
-            .attr("height", height + margin.top + margin.bottom)
+        .attr('viewBox', '0 0 '+(width + margin.left + margin.right)+' '+(height + margin.top + margin.bottom))
+        .attr('width', '100%')
           .append("g")
             .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
 
@@ -710,8 +710,8 @@ draft: false
               width = 550 - margin.left  - margin.right,
               height = alturaSVG - margin.top - margin.bottom,
               g = svg
-              .attr("width", width + margin.left + margin.right)
-              .attr("height", height + margin.top + margin.bottom)
+              .attr('viewBox', '0 0 '+(width + margin.left + margin.right)+' '+(height + margin.top + margin.bottom))
+              .attr('width', '100%')
               .append("g").attr("transform", "translate(" + margin.left + "," + margin.top + ")");
 
               var x = d3.scaleBand()

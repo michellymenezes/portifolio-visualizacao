@@ -64,8 +64,8 @@ tags: [D3, scatterplot]
        */
       var grafico = d3.select('#chart') // cria elemento <svg> com um <g> dentro
         .append('svg')
-          .attr('width', larguraVis + margin.left + margin.right)
-          .attr('height', alturaVis + margin.top + margin.bottom)
+        .attr('viewBox', '0 0 '+(larguraVis + margin.left + margin.right)+' '+(alturaVis + margin.top + margin.bottom))
+        .attr('width', '100%')
         .append('g') // para entender o <g> vá em x03-detalhes-svg.html
           .attr('transform', 'translate(' +  margin.left + ',' + margin.top + ')');
 
