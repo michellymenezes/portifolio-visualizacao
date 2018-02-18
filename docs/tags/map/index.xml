@@ -12,12 +12,13 @@
     
     
     <item>
-      <title>Paraibanas</title>
+      <title>Residentes paraibanas</title>
       <link>https://michellymenezes.github.io/portifolio-visualizacao/post/moradoras-paraibanas/</link>
       <pubDate>Thu, 15 Feb 2018 21:27:30 -0300</pubDate>
       
       <guid>https://michellymenezes.github.io/portifolio-visualizacao/post/moradoras-paraibanas/</guid>
-      <description></description>
+      <description>Através de duas diferentes perspectivas... Para esta visualização foram utilizados dados dos setores censitários da PB segundo o censo do IBGE de 2010. Mais especificamente, os dados são um recorte relacionados às mulheres moradoras de domicílios particulares e coletivos.
+A visualização abaixo está representado o número de mulheres em cada setor censitário do estado. A variação das cores representa um intervalo em valores brutos. É possível observar que a maior parte se encontra com números no intervalo 0-249 ou 250-500.</description>
     </item>
     
   </channel>
