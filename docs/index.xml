@@ -6,10 +6,19 @@
     <description>Recent content on Portifólio Visualização</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
-    <lastBuildDate>Thu, 15 Feb 2018 21:27:30 -0300</lastBuildDate>
+    <lastBuildDate>Wed, 21 Feb 2018 22:28:52 -0300</lastBuildDate>
     
 	<atom:link href="https://michellymenezes.github.io/portifolio-visualizacao/index.xml" rel="self" type="application/rss+xml" />
     
+    
+    <item>
+      <title>Crescimento Paraiba</title>
+      <link>https://michellymenezes.github.io/portifolio-visualizacao/post/crescimento-paraiba/</link>
+      <pubDate>Wed, 21 Feb 2018 22:28:52 -0300</pubDate>
+      
+      <guid>https://michellymenezes.github.io/portifolio-visualizacao/post/crescimento-paraiba/</guid>
+      <description>/*python -m SimpleHTTPServer*/ .cidades { fill: none; stroke: #fff; stroke-linejoin: round; } path:hover, path.highlighted { fill: tomato; } div.tooltip { position: absolute; background-color: white; border: 1px solid black; color: black; font-family:&#34;avenir next&#34;, Arial, sans-serif; padding: 4px 8px; display: none; }        var alturaSVG = 600, larguraSVG = 1000; var	margin = {top: 10, right: 20, bottom:30, left: 45}, // para descolar a vis das bordas do grafico larguraVis = larguraSVG - margin.</description>
+    </item>
     
     <item>
       <title>Residentes paraibanas</title>
