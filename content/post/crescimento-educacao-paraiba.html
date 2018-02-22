@@ -1,11 +1,23 @@
 ---
-title: "Crescimento Paraiba"
+title: "Crescimento da educação básica"
 date: 2018-02-21T22:28:52-03:00
+tags: [D3, map, interactive]
 draft: false
 ---
 
 <!DOCTYPE html>
 <meta charset="utf-8">
+<h1>Quanto cresce a educação básica?</h1>
+
+<p>Essa é uma visualização que exibe o crescimento dos municípios paraibanos em pontos
+percentuais com relação ao Índice de Desenvolvimento da Educação Básica (IDBE)
+entre 2011 e 2013.</p>
+
+<p>No mapa abaixo possível observar alguns pontos em rosa, estes representam as cidades
+com grande taxa de crescimento negativo, que de certo modo já somam um número considerável.
+Os municípios na cor branca estão na faixa de crescimento de -5 a 5%, enquanto os
+que estão em tons de verde apresentam crescimento positivo de no mínimo acima de 5%. </p>
+
 <style>
 
 /*python -m SimpleHTTPServer*/
@@ -33,6 +45,17 @@ div.tooltip {
 </style>
 
 <svg width="1000" height="600"></svg>
+
+<p> É interessante notar que as cidades mais desenvolvidas do estado (Campina Grande e João Pessoa) tem a cor branca
+  e não mostram um crescimento elevado, enquanto muitas cidades do interior felizmente
+   ultrapassam valores de 10% de crescimento.</p>
+
+   <p>Os dados aparentemente não demonstram
+   nenhuma outra inclinação que seja perceptível na visualização, eles são bem heterogêneos.
+    Aqueles municípios de cor cinza não apresentaram valores de coleta.</p>
+
+<br>
+<i>Por: Martha Michelly G M</i>
 
 <script src="https://d3js.org/d3.v4.min.js"></script>
 <script src="https://d3js.org/d3-scale-chromatic.v1.min.js"></script>

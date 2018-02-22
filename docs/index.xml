@@ -12,12 +12,13 @@
     
     
     <item>
-      <title>Crescimento Paraiba</title>
-      <link>https://michellymenezes.github.io/portifolio-visualizacao/post/crescimento-paraiba/</link>
+      <title>Crescimento da educação básica</title>
+      <link>https://michellymenezes.github.io/portifolio-visualizacao/post/crescimento-educacao-paraiba/</link>
       <pubDate>Wed, 21 Feb 2018 22:28:52 -0300</pubDate>
       
-      <guid>https://michellymenezes.github.io/portifolio-visualizacao/post/crescimento-paraiba/</guid>
-      <description>/*python -m SimpleHTTPServer*/ .cidades { fill: none; stroke: #fff; stroke-linejoin: round; } path:hover, path.highlighted { fill: tomato; } div.tooltip { position: absolute; background-color: white; border: 1px solid black; color: black; font-family:&#34;avenir next&#34;, Arial, sans-serif; padding: 4px 8px; display: none; }        var alturaSVG = 600, larguraSVG = 1000; var	margin = {top: 10, right: 20, bottom:30, left: 45}, // para descolar a vis das bordas do grafico larguraVis = larguraSVG - margin.</description>
+      <guid>https://michellymenezes.github.io/portifolio-visualizacao/post/crescimento-educacao-paraiba/</guid>
+      <description>Quanto cresce a educação básica? Essa é uma visualização que exibe o crescimento dos municípios paraibanos em pontos percentuais com relação ao Índice de Desenvolvimento da Educação Básica (IDBE) entre 2011 e 2013.
+No mapa abaixo possível observar alguns pontos em rosa, estes representam as cidades com grande taxa de crescimento negativo, que de certo modo já somam um número considerável. Os municípios na cor branca estão na faixa de crescimento de -5 a 5%, enquanto os que estão em tons de verde apresentam crescimento positivo de no mínimo acima de 5%.</description>
     </item>
     
     <item>

@@ -1,14 +1,14 @@
 <?xml version="1.0" encoding="utf-8" standalone="yes" ?>
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
-    <title>Map on Portifólio Visualização</title>
-    <link>https://michellymenezes.github.io/portifolio-visualizacao/tags/map/</link>
-    <description>Recent content in Map on Portifólio Visualização</description>
+    <title>Interactive on Portifólio Visualização</title>
+    <link>https://michellymenezes.github.io/portifolio-visualizacao/tags/interactive/</link>
+    <description>Recent content in Interactive on Portifólio Visualização</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
     <lastBuildDate>Wed, 21 Feb 2018 22:28:52 -0300</lastBuildDate>
     
-	<atom:link href="https://michellymenezes.github.io/portifolio-visualizacao/tags/map/index.xml" rel="self" type="application/rss+xml" />
+	<atom:link href="https://michellymenezes.github.io/portifolio-visualizacao/tags/interactive/index.xml" rel="self" type="application/rss+xml" />
     
     
     <item>
@@ -22,13 +22,13 @@ No mapa abaixo possível observar alguns pontos em rosa, estes representam as ci
     </item>
     
     <item>
-      <title>Residentes paraibanas</title>
-      <link>https://michellymenezes.github.io/portifolio-visualizacao/post/moradoras-paraibanas/</link>
-      <pubDate>Thu, 15 Feb 2018 21:27:30 -0300</pubDate>
+      <title>Fluxo na sociedade</title>
+      <link>https://michellymenezes.github.io/portifolio-visualizacao/post/fluxo-na-sociedade/</link>
+      <pubDate>Tue, 05 Dec 2017 09:34:30 -0300</pubDate>
       
-      <guid>https://michellymenezes.github.io/portifolio-visualizacao/post/moradoras-paraibanas/</guid>
-      <description>Através de duas diferentes perspectivas... Para esta visualização foram utilizados dados dos setores censitários da PB segundo o censo do IBGE de 2010. Mais especificamente, os dados são um recorte relacionados às mulheres moradoras de domicílios particulares e coletivos.
-A visualização abaixo está representado o número de mulheres em cada setor censitário do estado. A variação das cores representa um intervalo em valores brutos. É possível observar que a maior parte se encontra com números no intervalo 0-249 ou 250-499.</description>
+      <guid>https://michellymenezes.github.io/portifolio-visualizacao/post/fluxo-na-sociedade/</guid>
+      <description>Fluxo na sociedade     O que o fluxo e mobilidade pode nos contar sobre a sociedade?  O fluxo das pessoas e os meios que utilizam para se deslocar pode nos dizer muito a respeito de hábitos, estilo de vida e outras características de uma cidade.
+Em uma coleta realizada pela equipe do Lab Rua foi possível obter dados a respeito da circulação de pessoas ao longo do dia em três pontos consideravelmente movimentados na cidade de Campina Grande.</description>
     </item>
     
   </channel>

@@ -6,10 +6,20 @@
     <description>Recent content in D3 on Portifólio Visualização</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
-    <lastBuildDate>Thu, 15 Feb 2018 21:27:30 -0300</lastBuildDate>
+    <lastBuildDate>Wed, 21 Feb 2018 22:28:52 -0300</lastBuildDate>
     
 	<atom:link href="https://michellymenezes.github.io/portifolio-visualizacao/tags/d3/index.xml" rel="self" type="application/rss+xml" />
     
+    
+    <item>
+      <title>Crescimento da educação básica</title>
+      <link>https://michellymenezes.github.io/portifolio-visualizacao/post/crescimento-educacao-paraiba/</link>
+      <pubDate>Wed, 21 Feb 2018 22:28:52 -0300</pubDate>
+      
+      <guid>https://michellymenezes.github.io/portifolio-visualizacao/post/crescimento-educacao-paraiba/</guid>
+      <description>Quanto cresce a educação básica? Essa é uma visualização que exibe o crescimento dos municípios paraibanos em pontos percentuais com relação ao Índice de Desenvolvimento da Educação Básica (IDBE) entre 2011 e 2013.
+No mapa abaixo possível observar alguns pontos em rosa, estes representam as cidades com grande taxa de crescimento negativo, que de certo modo já somam um número considerável. Os municípios na cor branca estão na faixa de crescimento de -5 a 5%, enquanto os que estão em tons de verde apresentam crescimento positivo de no mínimo acima de 5%.</description>
+    </item>
     
     <item>
       <title>Residentes paraibanas</title>
