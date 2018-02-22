@@ -1,0 +1,128 @@
+---
+title: "Crescimento Paraiba"
+date: 2018-02-21T22:28:52-03:00
+draft: false
+---
+
+<!DOCTYPE html>
+<meta charset="utf-8">
+<style>
+
+/*python -m SimpleHTTPServer*/
+
+.cidades {
+  fill: none;
+  stroke: #fff;
+  stroke-linejoin: round;
+}
+
+path:hover, path.highlighted {
+  fill: tomato;
+}
+
+div.tooltip {
+  position: absolute;
+  background-color: white;
+  border: 1px solid black;
+  color: black;
+  font-family:"avenir next", Arial, sans-serif;
+  padding: 4px 8px;
+  display: none;
+}
+
+</style>
+
+<svg width="1000" height="600"></svg>
+
+<script src="https://d3js.org/d3.v4.min.js"></script>
+<script src="https://d3js.org/d3-scale-chromatic.v1.min.js"></script>
+<script src="https://d3js.org/topojson.v2.min.js"></script>
+<script src="../legenda-d3-cor.js"></script>
+<script>
+
+var alturaSVG = 600, larguraSVG = 1000;
+var	margin = {top: 10, right: 20, bottom:30, left: 45}, // para descolar a vis das bordas do grafico
+    larguraVis = larguraSVG - margin.left - margin.right,
+    alturaVis = alturaSVG - margin.top - margin.bottom;
+
+var svg = d3.select("svg")
+          .attr('viewBox', '0 0 '+(larguraVis + margin.left + margin.right)+' '+(alturaVis + margin.top + margin.bottom))
+          .attr('width', '100%'),
+    width = +svg.attr("width"),
+    height = +svg.attr("height");
+
+var path = d3.geoPath();
+
+// a escala de cores
+var color = d3.scaleThreshold()
+      .domain([-15, -5, 5, 15, ])
+      .range(d3.schemePiYG[5]);
+
+// função aux definida em legenda-d3-cor.js
+desenhaLegenda(-25, 25, color, "Crescimento entre 2011 e 2013 (pp*) (%)")
+
+d3.queue()
+    .defer(d3.json, "https://raw.githubusercontent.com/michellymenezes/portifolio-visualizacao/master/data/geo4-municipios-e-aprendizado-simplificado.json")
+    .await(ready);
+
+function ready(error, dados) {
+  if (error) throw error;
+
+  var cidades = dados.features;
+
+  svg.append("g")
+      .attr("class", "cidades")
+    .selectAll("path")
+    .data(cidades)
+    .enter()
+    .append("path")
+    .attr("stroke", d => {return "#000000" })
+      .attr("fill", d => {valor = d.properties["Crescimento entre 2011 e 2013 (pp*)"]; return valor === "NA" ? '#e0e0eb' : color(valor)})
+      .attr("d", path)
+      .on("mouseover",showTooltip)
+      .on("mousemove",moveTooltip)
+      .on("mouseout",hideTooltip)
+}
+
+// ZOOM
+
+//create zoom handler
+var zoom_handler = d3.zoom()
+    .on("zoom", zoom_actions);
+
+//specify what to do when zoom event listener is triggered
+function zoom_actions(){
+ d3.selectAll("path").attr("transform", d3.event.transform);
+}
+
+//add zoom behaviour to the svg element
+//same as svg.call(zoom_handler);
+zoom_handler(svg);
+
+
+// TOOLTIP
+
+//Create a tooltip, hidden at the start
+var tooltip = d3.select("body").append("div").attr("class","tooltip");
+//Position of the tooltip relative to the cursor
+var tooltipOffset = {x: 5, y: -25};
+
+function showTooltip(d) {
+  moveTooltip();
+
+  tooltip.style("display","block")
+      .text(d.properties.Cidade + ": " + d.properties["Crescimento entre 2011 e 2013 (pp*)"] + "%");
+}
+
+//Move the tooltip to track the mouse
+function moveTooltip() {
+  tooltip.style("top",(d3.event.pageY+tooltipOffset.y)+"px")
+      .style("left",(d3.event.pageX+tooltipOffset.x)+"px");
+}
+
+//Create a tooltip, hidden at the start
+function hideTooltip() {
+  tooltip.style("display","none");
+}
+
+</script>
