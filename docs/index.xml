@@ -6,10 +6,19 @@
     <description>Recent content on Portifólio Visualização</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
-    <lastBuildDate>Wed, 21 Feb 2018 22:28:52 -0300</lastBuildDate>
+    <lastBuildDate>Sat, 24 Feb 2018 15:53:52 -0300</lastBuildDate>
     
 	<atom:link href="https://michellymenezes.github.io/portifolio-visualizacao/index.xml" rel="self" type="application/rss+xml" />
     
+    
+    <item>
+      <title>Metas do IDEB no Brasil</title>
+      <link>https://michellymenezes.github.io/portifolio-visualizacao/post/metas-ideb-brasil/</link>
+      <pubDate>Sat, 24 Feb 2018 15:53:52 -0300</pubDate>
+      
+      <guid>https://michellymenezes.github.io/portifolio-visualizacao/post/metas-ideb-brasil/</guid>
+      <description>Como foi nosso desempenho no ano de 2015?  /*python -m SimpleHTTPServer*/ .cidades { fill: none; stroke: #fff; stroke-linejoin: round; } path:hover, path.highlighted { fill: #FF4081; } div.tooltip { position: absolute; background-color: white; border: 1px solid black; color: black; font-family:&#34;avenir next&#34;, Arial, sans-serif; padding: 4px 8px; display: none; }   Por: Martha Michelly G M      var alturaSVG = 600, larguraSVG = 1000; var	margin = {top: 10, right: 20, bottom:30, left: 45}, // para descolar a vis das bordas do grafico larguraVis = larguraSVG - margin.</description>
+    </item>
     
     <item>
       <title>Crescimento da educação básica</title>
