@@ -136,31 +136,22 @@ d3.queue()
         .defer(d3.json, "https://raw.githubusercontent.com/michellymenezes/portifolio-visualizacao/master/data/geo4-municipios-e-educacao-basica-simplificado.json")
         .await(readyLegend);
 
-
-  //   function transform() {
-  //   return d3.zoomIdentity
-  //       .translate(-300,-220)
-  //       .scale(1.7,1.7)
-  //       .translate(-point[0], -point[1]);
-  // }
-
-
 function ready(error, dados) {
   if (error) throw error;
 
   var cidades = dados.features;
-  var zoom = d3.zoom()
-          .on("zoom", zoomed);
-
-  var zoomer = svg.append("rect")
-          .call(zoom)
-          .call(zoom.transform, d3.zoomIdentity.scale(2,2));
-
-  function zoomed() {
-          d3.selectAll("path")
-
-          .attr("transform", d3.event.transform);
-      }
+  // var zoom = d3.zoom()
+  //         .on("zoom", zoomed);
+  //
+  // var zoomer = svg.append("rect")
+  //         .call(zoom)
+  //         .call(zoom.transform, d3.zoomIdentity.scale(2,2));
+  //
+  // function zoomed() {
+  //         d3.selectAll("path")
+  //
+  //         .attr("transform", d3.event.transform);
+  //     }
 
   svg.append("g")
       .attr("class", "cidades")
@@ -171,7 +162,7 @@ function ready(error, dados) {
   //  .attr("transform","translate(-300,-220)scale(1.7,1.7)")
     // .call(zoom_handler.on("zoom",zoom_actions))
     //    .attr("transform","translate(-300,-220)scale(1.7,1.7)")
-    .call(zoom)
+  //  .call(zoom)
 //    .call(zoom.transform, d3.zoomIdentity.scale(1.7,1.7))
     .attr("stroke-width", d => {return 0.2 })
     .attr("stroke", d => {return "#000000" })
@@ -292,7 +283,7 @@ function zoom_actions(){
 
 //add zoom behaviour to the svg element
 //same as svg.call(zoom_handler);
-//zoom_handler(svg);
+zoom_handler(svg);
 
 
 // TOOLTIP
