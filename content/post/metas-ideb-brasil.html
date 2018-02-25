@@ -93,18 +93,14 @@ function ready(error, dados) {
   if (error) throw error;
 
   var cidades = dados.features;
-  // var zoom = d3.zoom()
-  //         .on("zoom", zoomed);
-  //
-  // var zoomer = svg.append("rect")
-  //         .call(zoom)
-  //         .call(zoom.transform, d3.zoomIdentity.scale(2,2));
-  //
-  // function zoomed() {
-  //         d3.selectAll("path")
-  //
-  //         .attr("transform", d3.event.transform);
-  //     }
+  var zoom = d3.zoom()
+          .on("zoom", zoomed);
+
+  function zoomed() {
+          d3.selectAll("path")
+
+          .attr("transform", d3.event.transform);
+      }
 
   svg.append("g")
       .attr("class", "cidades")
@@ -112,11 +108,10 @@ function ready(error, dados) {
     .data(cidades)
     .enter()
     .append("path")
-  //  .attr("transform","translate(-300,-220)scale(1.7,1.7)")
     // .call(zoom_handler.on("zoom",zoom_actions))
     //    .attr("transform","translate(-300,-220)scale(1.7,1.7)")
-  //  .call(zoom)
-//    .call(zoom.transform, d3.zoomIdentity.scale(1.7,1.7))
+    .call(zoom)
+    .call(zoom.transform, d3.zoomIdentity.translate(-300,-220).scale(1.7,1.7))
     .attr("stroke-width", d => {return 0.2 })
     .attr("stroke", d => {return "#000000" })
     .attr("fill", d => {valor = d.properties["nota_2015"]; return valor === "NA" ? '#e0e0eb' : color(valor)})
@@ -236,7 +231,7 @@ function zoom_actions(){
 
 //add zoom behaviour to the svg element
 //same as svg.call(zoom_handler);
-zoom_handler(svg);
+//zoom_handler(svg);
 
 
 // TOOLTIP
