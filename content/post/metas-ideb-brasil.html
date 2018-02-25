@@ -35,8 +35,16 @@ div.tooltip {
 
 </style>
 
-<svg width="1000" height="600"></svg>
 
+<div>
+
+
+<div class="left">
+  <div id="controls"></div >
+</div>
+<div class="svg2" id="svg2"></div>
+</div>
+<svg width="1000" height="600"></svg>
 
 <br>
 <i>Por: Martha Michelly G M</i>
@@ -44,11 +52,11 @@ div.tooltip {
 <script src="https://d3js.org/d3.v4.min.js"></script>
 <script src="https://d3js.org/d3-scale-chromatic.v1.min.js"></script>
 <script src="https://d3js.org/topojson.v2.min.js"></script>
-<script src="../legenda-d3-cor.js"></script>
+<script src="../legenda-d3-cor0.js"></script>
 <script>
 
 var alturaSVG = 600, larguraSVG = 1000;
-var	margin = {top: 10, right: 20, bottom:30, left: 45}, // para descolar a vis das bordas do grafico
+var	margin = {top: 10, right: 10, bottom:10, left: 15}, // para descolar a vis das bordas do grafico
     larguraVis = larguraSVG - margin.left - margin.right,
     alturaVis = alturaSVG - margin.top - margin.bottom;
 
@@ -58,12 +66,17 @@ var svg = d3.select("svg")
     width = +svg.attr("width"),
     height = +svg.attr("height");
 
+var svg2 = d3.select("#svg2").append('svg');;
+
+
 var path = d3.geoPath();
 
 // a escala de cores
 var color = d3.scaleThreshold()
               .domain(d3.range(0,8.5,1.5))
               .range(d3.schemeSpectral[7]);
+
+var getSVG;
 
 // função aux definida em legenda-d3-cor.js
 desenhaLegenda(0, 8.5, color, "Notas no IDEB em 2015")
@@ -72,10 +85,35 @@ d3.queue()
     .defer(d3.json, "https://raw.githubusercontent.com/michellymenezes/portifolio-visualizacao/master/data/geo4-municipios-e-educacao-basica-simplificado.json")
     .await(ready);
 
+    d3.queue()
+        .defer(d3.json, "https://raw.githubusercontent.com/michellymenezes/portifolio-visualizacao/master/data/geo4-municipios-e-educacao-basica-simplificado.json")
+        .await(readyLegend);
+
+
+  //   function transform() {
+  //   return d3.zoomIdentity
+  //       .translate(-300,-220)
+  //       .scale(1.7,1.7)
+  //       .translate(-point[0], -point[1]);
+  // }
+
+
 function ready(error, dados) {
   if (error) throw error;
 
   var cidades = dados.features;
+  var zoom = d3.zoom()
+          .on("zoom", zoomed);
+
+  var zoomer = svg.append("rect")
+          .call(zoom)
+          .call(zoom.transform, d3.zoomIdentity.scale(2,2));
+
+  function zoomed() {
+          d3.selectAll("path")
+
+          .attr("transform", d3.event.transform);
+      }
 
   svg.append("g")
       .attr("class", "cidades")
@@ -83,6 +121,11 @@ function ready(error, dados) {
     .data(cidades)
     .enter()
     .append("path")
+  //  .attr("transform","translate(-300,-220)scale(1.7,1.7)")
+    // .call(zoom_handler.on("zoom",zoom_actions))
+    //    .attr("transform","translate(-300,-220)scale(1.7,1.7)")
+    .call(zoom)
+//    .call(zoom.transform, d3.zoomIdentity.scale(1.7,1.7))
     .attr("stroke-width", d => {return 0.2 })
     .attr("stroke", d => {return "#000000" })
     .attr("fill", d => {valor = d.properties["nota_2015"]; return valor === "NA" ? '#e0e0eb' : color(valor)})
@@ -90,22 +133,119 @@ function ready(error, dados) {
       .on("mouseover",showTooltip)
       .on("mousemove",moveTooltip)
       .on("mouseout",hideTooltip)
+
+
+}
+
+
+function readyLegend(error, dados) {
+  if (error) throw error;
+
+  var cidades = dados.features;
+
+    var  margin = {top: 50, right: 30, bottom: 0, left: 20},
+      width = 800 - margin.left  - margin.right,
+      height = 200 - margin.top - margin.bottom,
+      g = svg2
+      .attr('viewBox', '0 0 '+(width + margin.left + margin.right)+' '+(height + margin.top + margin.bottom))
+      .attr('width', '100%')
+      .append("g").attr("transform", "translate(" + margin.left + "," + margin.top + ")");
+
+      var colors = ["#fc8d59", "#3288bd"]
+
+      d3.select("#controls").selectAll("button.teams")
+            .data(["Metas atingidas", "Notas"])
+            .enter()
+              .append("button")
+              .attr("class", "btn-default")
+               .on("click", mudaDimensao)
+               .html(d => d);
+
+     function mudaDimensao(dimensaoSelecionada) {
+       dimensao = dimensaoSelecionada;
+
+       if(dimensaoSelecionada == "Notas"){
+
+         console.log("NOtas");
+         color = d3.scaleThreshold()
+                       .domain(d3.range(0,8.5,1.5))
+                       .range(d3.schemeSpectral[7]);
+
+         svg.selectAll("path")
+           .data(cidades)
+           .transition().duration(100).delay((d,i) => i * 0.15 )
+           .attr("fill", d => {valor = d.properties["nota_2015"]; return valor === "NA" ? '#e0e0eb' : color(valor)})
+
+
+      } else{
+        console.log("Outro");
+
+        svg.selectAll("path")
+          .data(cidades)
+          .transition().duration(100).delay((d,i) => i * 0.15)
+          .attr("fill", d => {var valor = 0; if(d.properties["nota_2015"] >= d.properties["meta_2015"]) valor =1; return valor === "NA" ? '#e0e0eb' : colors[valor]})
+      }
+     }
+
+
+  var legendElementWidth = Math.floor(((220 - margin.left) / 2)),
+  gridSize = Math.floor(larguraVis / 15);
+
+  var colorScale = d3.scaleThreshold()
+      .domain(["Não atingiu ", "- Atingiu"])
+      .range([0].concat(colors));
+
+  var legend = g.selectAll(".legend")
+      .data(colorScale.domain(), function(d) { return d; })
+      .enter().append("g")
+      .attr("class", "legend")
+      .attr("transform", "translate(580,-500)");
+
+      legend.append("text")
+          .attr("class", "caption")
+          .attr("x", 0 )
+          .attr("y", alturaVis - 10)
+          .attr("fill", "#000")
+          .attr("text-anchor", "start")
+          .attr("font-size", "15")
+          .attr("font-weight", "bold")
+          .text("Sobre o alcance da meta");
+
+  legend.append("rect")
+    .attr("x", function(d, i) { return legendElementWidth * i; })
+    .attr("y", alturaVis)
+    .attr("align", "right")
+    .attr("width", legendElementWidth)
+    .attr("height", 10)
+    .style("fill", function(d, i) { return colors[i]; });
+
+  legend.append("text")
+    .attr("class", "mono")
+    .text(function(d) { return d})
+    .attr("font-size", "15")
+    .attr("x", function(d, i) { return legendElementWidth * i; })
+    .attr("y", alturaVis + 30);
 }
 
 // ZOOM
 
 //create zoom handler
 var zoom_handler = d3.zoom()
+
     .on("zoom", zoom_actions);
 
 //specify what to do when zoom event listener is triggered
 function zoom_actions(){
- d3.selectAll("path").attr("transform", d3.event.transform);
+ d3.selectAll("path")
+ .attr("transform", d3.event.transform)
+
+  //  .attr("transform","translate(-300,-220)scale(1.7,1.7)")
+
 }
 
 //add zoom behaviour to the svg element
 //same as svg.call(zoom_handler);
-zoom_handler(svg);
+//zoom_handler(svg);
 
 
 // TOOLTIP
