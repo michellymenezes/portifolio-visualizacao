@@ -1,5 +1,5 @@
 ---
-title: "Metas do IDEB no Brasil"
+title: "Metas do Ideb no Brasil"
 date: 2018-02-24T15:53:52-03:00
 tags: [D3, map, interactive]
 draft: false
@@ -8,6 +8,25 @@ draft: false
 <!DOCTYPE html>
 <meta charset="utf-8">
 <h1>Como foi nosso desempenho no ano de 2015?</h1>
+
+<br>
+
+<p>Todos os anos são feitas avaliações do Ideb em todas as escolas para calcular este indíce.
+  Assim como as avaliações, todos os anos são estipuladas novas metas para cada
+  município. "As metas estabelecidas pelo Ideb são diferenciadas para cada escola
+  e rede de ensino, com o objetivo único de alcançar 6 pontos até 2022, média
+  correspondente ao sistema educacional dos países desenvolvidos."<p>
+<br>
+    <blockquote>Ideb é o Índice de Desenvolvimento da Educação Básica, criado em 2007, pelo
+      Instituto Nacional de Estudos e Pesquisas Educacionais Anísio Teixeira (Inep),
+       formulado para medir a qualidade do aprendizado nacional e estabelecer metas
+       para a melhoria do ensino. (<a href="http://portal.mec.gov.br/secretaria-de-educacao-basica/programas-e-acoes?id=180">site</a>)</blockquote>
+<br>
+<p> A visualização abaixo nos traz informações sobre notas e metas relacionadas
+  ao ano de 2015. É possível observar o mapa de duas perspectivas: através das
+  médias obtidas por cada cidade ou através alcance da meta de cada cidade.
+  Ao passar o cursor sobre o mapa são mostradas informações sobre municípios como
+  nome, estado e metas. As opções de zoom também estão disponíveis.<p>
 
 <style>
 
@@ -35,16 +54,36 @@ div.tooltip {
 
 </style>
 
-
 <div>
-
-
+<h5>Modo de visualizacao:<h5>
 <div class="left">
   <div id="controls"></div >
 </div>
 <div class="svg2" id="svg2"></div>
 </div>
 <svg width="1000" height="600"></svg>
+
+<p>É notório que boa parte do mapa se preenche nas cores relacionadas as notas no
+intervalo 3.0-4.5-6.0. O segunda média de notas que mais se destaca é das cidades
+no intervalo 6.0-7.5, que estão mais concentrados nas regiões Sul e Sudeste.
+São mínimos os valores abaixo de 3 e maiores que 7.5, estes não apresentam uma
+área específica de concentração.</p>
+
+<p>Ao se mudar a perspectiva de visão para metas atingidas o cenário apresenta
+outras características. Aparentemente a proporção de municípios que atingiram
+a meta é maior.</p>
+
+<h4>Algumas observações:</h4>
+
+<p><li>O litoral do nordeste não apresenta uma cor muito predominante,
+mas é possível observar uma grande mancha azul na área referente ao Ceará e parte
+de outros estados como Pernambuco e Bahia.</li></p>
+
+<p><li>A região Centro-Oeste apresenta uma pedominância de municípios que
+  atingiram a média.</li></p>
+
+<p><li>A fronteira esquerda do país também apresenta uma pedominância de
+  municípios que atingiram a média.</li></p>
 
 <br>
 <i>Por: Martha Michelly G M</i>
@@ -93,14 +132,14 @@ function ready(error, dados) {
   if (error) throw error;
 
   var cidades = dados.features;
-  var zoom = d3.zoom()
-          .on("zoom", zoomed);
-
-  function zoomed() {
-          d3.selectAll("path")
-
-          .attr("transform", d3.event.transform);
-      }
+  // var zoom = d3.zoom()
+  //         .on("zoom", zoomed);
+  //
+  // function zoomed() {
+  //         d3.selectAll("path")
+  //
+  //         .attr("transform", d3.event.transform);
+  //     }
 
   svg.append("g")
       .attr("class", "cidades")
@@ -108,10 +147,8 @@ function ready(error, dados) {
     .data(cidades)
     .enter()
     .append("path")
-    // .call(zoom_handler.on("zoom",zoom_actions))
-    //    .attr("transform","translate(-300,-220)scale(1.7,1.7)")
-    .call(zoom)
-    .call(zoom.transform, d3.zoomIdentity.translate(-300,-220).scale(1.7,1.7))
+//    .call(zoom)
+//    .call(zoom.transform, d3.zoomIdentity.translate(-300,-220).scale(1.7,1.7))
     .attr("stroke-width", d => {return 0.2 })
     .attr("stroke", d => {return "#000000" })
     .attr("fill", d => {valor = d.properties["nota_2015"]; return valor === "NA" ? '#e0e0eb' : color(valor)})
@@ -140,7 +177,7 @@ function readyLegend(error, dados) {
       var colors = ["#fc8d59", "#3288bd"]
 
       d3.select("#controls").selectAll("button.teams")
-            .data(["Metas atingidas", "Notas"])
+            .data(["Por notas", "Por metas atingidas"])
             .enter()
               .append("button")
               .attr("class", "btn-default")
@@ -150,9 +187,7 @@ function readyLegend(error, dados) {
      function mudaDimensao(dimensaoSelecionada) {
        dimensao = dimensaoSelecionada;
 
-       if(dimensaoSelecionada == "Notas"){
-
-         console.log("NOtas");
+       if(dimensaoSelecionada == "Por notas"){
          color = d3.scaleThreshold()
                        .domain(d3.range(0,8.5,1.5))
                        .range(d3.schemeSpectral[7]);
@@ -164,8 +199,6 @@ function readyLegend(error, dados) {
 
 
       } else{
-        console.log("Outro");
-
         svg.selectAll("path")
           .data(cidades)
           .transition().duration(100).delay((d,i) => i * 0.15)
@@ -178,7 +211,7 @@ function readyLegend(error, dados) {
   gridSize = Math.floor(larguraVis / 15);
 
   var colorScale = d3.scaleThreshold()
-      .domain(["Não atingiu ", "- Atingiu"])
+      .domain(["Não atingiu", "Atingiu"])
       .range([0].concat(colors));
 
   var legend = g.selectAll(".legend")
@@ -194,7 +227,7 @@ function readyLegend(error, dados) {
           .attr("fill", "#000")
           .attr("text-anchor", "start")
           .attr("font-size", "15")
-          .attr("font-weight", "bold")
+          .attr("font-family", "sans-serif")
           .text("Sobre o alcance da meta");
 
   legend.append("rect")
@@ -209,6 +242,7 @@ function readyLegend(error, dados) {
     .attr("class", "mono")
     .text(function(d) { return d})
     .attr("font-size", "15")
+    .attr("font-family", "sans-serif")
     .attr("x", function(d, i) { return legendElementWidth * i; })
     .attr("y", alturaVis + 30);
 }
@@ -231,7 +265,9 @@ function zoom_actions(){
 
 //add zoom behaviour to the svg element
 //same as svg.call(zoom_handler);
+zoom_handler(svg);
 //zoom_handler(svg);
+
 
 
 // TOOLTIP

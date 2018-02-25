@@ -40,6 +40,6 @@ var desenhaLegenda = function(min, max, escalaDeCor, nomeVariavel){
     .select(".domain")
       .remove();
 
-  
+
 
 }
