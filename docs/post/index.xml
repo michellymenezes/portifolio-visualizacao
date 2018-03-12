@@ -17,7 +17,7 @@
       <pubDate>Sun, 11 Mar 2018 13:05:57 -0300</pubDate>
       
       <guid>https://michellymenezes.github.io/portifolio-visualizacao/post/nouvelle-vague-semelhantes/</guid>
-      <description></description>
+      <description>D3 -- -- --  .node { fill: #ccc; stroke: #fff; stroke-width: 2px; } .link { stroke: #999; stroke-opacity: 0.3; }         var width = 1000, height = 1000; var svg = d3.select(&#34;#chart&#34;) .append(&#34;svg&#34;) .attr(&#39;version&#39;, &#39;1.1&#39;) .attr(&#39;viewBox&#39;, &#39;0 0 &#39;+width+&#39; &#39;+height) .attr(&#39;width&#39;, &#39;100%&#39;); var color = d3.scaleOrdinal(d3.schemeCategory20); var simulation = d3.forceSimulation() .force(&#34;link&#34;, d3.forceLink().id(function(d) { return d.id; })) .force(&#34;charge&#34;, d3.forceManyBody().strength(-5)) .force(&#34;center&#34;, d3.forceCenter(width / 2, height / 2)); d3.</description>
     </item>
     
     <item>
