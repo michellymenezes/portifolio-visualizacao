@@ -1,45 +1,66 @@
 ---
 title: "Nouvelle Vague e semelhantes"
 date: 2018-03-11T13:05:57-03:00
+tags: [D3, network, interactive]
 draft: false
 ---
 
 <!DOCTYPE html>
-<html lang="en">
-<head>
-	<meta charset="utf-8">
-  <meta http-equiv="X-UA-Compatible" content="IE=edge">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-	<link rel="shortcut icon" href="/favicon.ico" type="image/x-icon">
-	<link rel="icon" href="/favicon.ico" type="image/x-icon">
-	<title>D3</title>
 
-	<link href="https://fonts.googleapis.com/css?family=Open+Sans|Roboto+Slab" rel="stylesheet">
-	<!-- <link href="css/bootstrap.min.css" rel="stylesheet"> -->
-	<!-- <link href="../main.css" rel="stylesheet"> -->
-	<!-- <link href="../fonts.css" rel="stylesheet"> -->
+<body>
+	<h1> Uma visualização de redes</h1>
+	<p>Ao observar o contexto musical de artistas e bandas é possível identificar
+	semelhanças entre eles. Essas semelhanças podem ser caracterizadas por detalhes
+ 	como estilo musical, frquência das músicas, tipo de público, entre outros.</p>
+
+	<p>Logo abaixo é possível observar a relação da banda Nouvelle Vague (ponto
+		laranja) com seus semelhantes (pontos roxos). A relações mostradas inicialmente
+		são apenas as de primeiro grau, aquelas que tem conexão direta. Ao visualizar
+	a rede completa também são mostrados outros elementos da música que não estão
+	ligados diretamente a Nouvelle Vague, mas que apresentam semelhanças em graus 2, 3, ...</p>
+
+	<p>Ao passar o cursor sobre os pontos é possível observar qual artista/banda ele
+		representa.<p>
+	<br>
+	<div>
+	<h5>Modo de visualização:<h5>
+	<div class="left">
+	  <div id="controls"></div >
+	</div>
+
+	<div class="container">
+
+		<div style="display: none" id="chart2"></div>
+
+	</div>
+	<div class="container">
+
+		<div id="chart"></div>
+
+	</div>
+</div>
+
+	<p>O tamanho de cada ponto importa, ele representa a popularidade. Quanto maior,
+		mais popular. Não há tanta diferença de popularidade entre a banda observada
+		e seus semelhantes de 1º grau, essa diferença fica mais notória quando
+		observamos todo o contexto.</p>
+
+		<br>
+		<i>Por: Martha Michelly G M</i>
+
 	<style>
 			.node {
-			    fill: #ccc;
-			    stroke: #fff;
-			    stroke-width: 2px;
+					fill: #ccc;
+					stroke: #fff;
+					stroke-width: 2px;
 			}
 
 			.link {
 					stroke: #999;
 					stroke-opacity: 0.3;
 			}
-    </style>
-</head>
-<body>
+		</style>
 
-	<div class="container">
-
-		<div id="chart"></div>
-
-	</div>
-
-	<footer></footer>
 
 	<!-- scripts -->
 	<script src="https://d3js.org/d3.v4.min.js"></script>
@@ -53,12 +74,17 @@ draft: false
 				.attr('version', '1.1')
 				.attr('viewBox', '0 0 '+width+' '+height)
 				.attr('width', '100%');
+		var svg2 = d3.select("#chart2")
+				.append("svg")
+				.attr('version', '1.1')
+				.attr('viewBox', '0 0 '+width+' '+height)
+				.attr('width', '100%');
 
 		var color = d3.scaleOrdinal(d3.schemeCategory20);
 
 		var simulation = d3.forceSimulation()
 		    .force("link", d3.forceLink().id(function(d) { return d.id; }))
-		    .force("charge", d3.forceManyBody().strength(-5))
+		    .force("charge", d3.forceManyBody().strength(-4))
 		    .force("center", d3.forceCenter(width / 2, height / 2));
 
 		d3.json("https://raw.githubusercontent.com/michellymenezes/portifolio-visualizacao/master/data/nouvelle-vague.json", function(error, graph) {
@@ -66,20 +92,23 @@ draft: false
 
 			console.dir(graph.edges);
 			console.dir(graph.nodes);
+			bandas = graph.edges.filter(function(d){ return d.id.search("4h7NLIlg1oYdEtfQJfyto0") != -1}).reduce(function(lista,d){lista.push(d.target); lista.push(d.source); return lista}, [])
+			bandas = Array.from(new Set(bandas));
 
 		  var link = svg.append("g")
 		      .attr("class", "link")
 		    .selectAll("line")
-		    	.data(graph.edges)
+		    .data(graph.edges.filter(function(d){ return (bandas.includes(d.source) & bandas.includes(d.target))}))
 		    .enter().append("line");
 
 		  var node = svg.append("g")
 		      .attr("class", "nodes")
 		    .selectAll("circle")
-		    	.data(graph.nodes)
+					.data(graph.nodes.filter(function(d){ return (bandas.includes(d.id))}))
 		    .enter().append("circle")
-		      .attr("r", 5)
-		      .attr("fill", function(d) {  if(d.label === "Nouvelle Vague"){ return "#333"} return color(d.group); })
+		      .attr("r", function(d) {return (d.size * 0.5) + 1})
+					.attr("opacity",function(d) {  if(d.label === "Nouvelle Vague"){ return 0.8} return 0.6; })
+		      .attr("fill", function(d) {  if(d.label === "Nouvelle Vague"){ return "#ff9966"} return "#663366"; })
 		      .call(d3.drag()
 		          .on("start", dragstarted)
 		          .on("drag", dragged)
@@ -87,6 +116,28 @@ draft: false
 
 		  node.append("title")
 		      .text(function(d) { return d.label; });
+
+			var link2 = svg2.append("g")
+					.attr("class", "link")
+				.selectAll("line")
+				 .data(graph.edges)
+				.enter().append("line");
+
+			var node2 = svg2.append("g")
+					.attr("class", "nodes")
+				.selectAll("circle")
+					.data(graph.nodes)
+				.enter().append("circle")
+					.attr("r", function(d) {return (d.size * 0.2) + 3})
+					.attr("opacity",function(d) {  if(d.label === "Nouvelle Vague"){ return 0.8} return 0.6; })
+					.attr("fill", function(d) {  if(d.label === "Nouvelle Vague"){ return "#ff9966"} return "#663366"; })
+					.call(d3.drag()
+							.on("start", dragstarted)
+							.on("drag", dragged)
+							.on("end", dragended));
+
+			node2.append("title")
+					.text(function(d) { return d.label; });
 
 
 		  simulation
@@ -96,6 +147,38 @@ draft: false
 		  simulation.force("link")
 		      .links(graph.edges);
 
+			simulation.force("link")
+		      .links(graph.edges);
+
+
+		d3.select("#controls").selectAll("button.teams")
+					.data(["1º grau", "Rede completa"])
+					.enter()
+						.append("button")
+						.attr("class", "btn-default")
+						 .on("click", mudaDimensao)
+						 .html(d => d);
+
+			function mudaDimensao(dimensaoSelecionada) {
+				 dimensao = dimensaoSelecionada;
+
+				 if(dimensaoSelecionada == "Rede completa"){
+
+					 d3.select("#chart")
+				 		.style("display", "none")
+					d3.select("#chart2")
+						 .style("display", "block")
+
+
+				} else{
+
+					d3.select("#chart2")
+					 .style("display", "none")
+				 d3.select("#chart")
+						.style("display", "block")
+				}
+			}
+
 		  function ticked() {
 		    link
 		        .attr("x1", function(d) { return d.source.x; })
@@ -104,6 +187,16 @@ draft: false
 		        .attr("y2", function(d) { return d.target.y; });
 
 		    node
+		        .attr("cx", function(d) { return d.x; })
+		        .attr("cy", function(d) { return d.y; });
+
+				link2
+		        .attr("x1", function(d) { return d.source.x; })
+		        .attr("y1", function(d) { return d.source.y; })
+		        .attr("x2", function(d) { return d.target.x; })
+		        .attr("y2", function(d) { return d.target.y; });
+
+		    node2
 		        .attr("cx", function(d) { return d.x; })
 		        .attr("cy", function(d) { return d.y; });
 		  }

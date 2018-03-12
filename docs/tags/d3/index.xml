@@ -6,10 +6,20 @@
     <description>Recent content in D3 on Portifólio Visualização</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
-    <lastBuildDate>Sat, 24 Feb 2018 15:53:52 -0300</lastBuildDate>
+    <lastBuildDate>Sun, 11 Mar 2018 13:05:57 -0300</lastBuildDate>
     
 	<atom:link href="https://michellymenezes.github.io/portifolio-visualizacao/tags/d3/index.xml" rel="self" type="application/rss+xml" />
     
+    
+    <item>
+      <title>Nouvelle Vague e semelhantes</title>
+      <link>https://michellymenezes.github.io/portifolio-visualizacao/post/nouvelle-vague-semelhantes/</link>
+      <pubDate>Sun, 11 Mar 2018 13:05:57 -0300</pubDate>
+      
+      <guid>https://michellymenezes.github.io/portifolio-visualizacao/post/nouvelle-vague-semelhantes/</guid>
+      <description>Uma visualização de redes Ao observar o contexto musical de artistas e bandas é possível identificar semelhanças entre eles. Essas semelhanças podem ser caracterizadas por detalhes como estilo musical, frquência das músicas, tipo de público, entre outros.
+Logo abaixo é possível observar a relação da banda Nouvelle Vague (ponto laranja) com seus semelhantes (pontos roxos). A relações mostradas inicialmente são apenas as de primeiro grau, aquelas que tem conexão direta.</description>
+    </item>
     
     <item>
       <title>Metas do Ideb no Brasil</title>
