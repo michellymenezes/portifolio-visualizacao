@@ -15,3 +15,4 @@ Here you can find visualizations like:
 * Maps
 * Streamgraph
 * Scatterplot
+* Network
