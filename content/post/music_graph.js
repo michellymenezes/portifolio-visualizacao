@@ -41,7 +41,7 @@ d3.json('https://raw.githubusercontent.com/michellymenezes/my-spotify-top50/mast
     return nodes[j].genres.indexOf(n) !== -1;});
 
         if(common.length > 0){
-          edges.push({"source": nodes[i].id, "target": nodes[j].id, "type": common.includes("mpb")? "mpb": common[0]})
+          edges.push({"source": nodes[i].id, "target": nodes[j].id, "type": common.includes("mpb")? "mpb": common.includes("mpb")? "mpb": common[0]})
         }
       }
     }
@@ -133,7 +133,7 @@ d3.json('https://raw.githubusercontent.com/michellymenezes/my-spotify-top50/mast
             tooltipDiv.transition()
                 .duration(200)
                 .style('opacity', 0.7);
-            tooltipDiv.html(`${d.name}`)
+            tooltipDiv.html(`${d.name} - ${d.genres}`)
                 .style("left", d3.event.pageX + "px")
                 .style("top", d3.event.pageY + "px");
 
