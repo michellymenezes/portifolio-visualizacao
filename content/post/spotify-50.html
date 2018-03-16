@@ -23,23 +23,41 @@ draft: false
 <body>
 <h1> Artistas e gêneros mais escutados</h1>
 
-<p>Esta é uma breve visualização baseada no trabalho realizado (<a href="https://github.com/ss1993/my-spotify-top50">neste repositório</a>).</p>
-        <div class="container">
-            <svg >
-                <defs>
-                    <filter id="greyscale">
-                        <feColorMatrix
-                                type="matrix"
-                                values="0 1 0 0 0
-                  0 1 0 0 0
-                  0 1 0 0 0
-                  0 1 0 1 0 ">
-                        </feColorMatrix>
-                    </filter>
-                </defs>
-            </svg>
-        </div>
+<p>Esta é uma breve visualização baseada no trabalho realizado <a href="https://github.com/ss1993/my-spotify-top50">neste repositório</a>.
+	Através do <a href= "https://developer.spotify.com/web-api/console/get-playlists/">endpoint</a>
+	disponibilizado pelo Spotify é possível adquirir dados referentes aos artistas
+	mais escutados por um usuário, assim como seus respectivos gêneros musicais.
+	O usuário utilizado para essa visualização foi o meu próprio.</p>
 
+<p>A rede abaixo mostra a relação entre os artistas no tocante aos seus gêneros
+	musicais. É possível observar que a relação entre eles termina formando grandes
+	grupos. Ao passar o cursor sobre as imagens é mostrado o nome do artista e também
+	outros gêneros referentes ao mesmo que não caracterizam uma relação com outros músicos.</p>
+
+<div class="container">
+    <svg >
+        <defs>
+            <filter id="greyscale">
+                <feColorMatrix
+                        type="matrix"
+                        values="0 1 0 0 0
+          0 1 0 0 0
+          0 1 0 0 0
+          0 1 0 1 0 ">
+                </feColorMatrix>
+            </filter>
+        </defs>
+    </svg>
+</div>
+
+<p>Observo que meu gosto musical se divide em quatro grupos. O primeiro é
+	grande e destaca gêneros como MPB e Bossa Nova. O segundo envolve alguns
+	artistas internacionais da música pop. Um pequeno grupo também se formou envolvendo
+	dois nomes do Pop Rock. Curiosamente um quarto grupo pode ser identificado
+	composto por apenas uma banda.</p>
+
+<br>
+<i>Por: Martha Michelly G M</i>
 
 <!-- Scripts -->
 <!-- <script src="assets/js/jquery.min.js"></script>

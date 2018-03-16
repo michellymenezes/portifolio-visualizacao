@@ -17,8 +17,8 @@
       <pubDate>Thu, 15 Mar 2018 13:05:57 -0300</pubDate>
       
       <guid>https://michellymenezes.github.io/portifolio-visualizacao/post/spotify-50/</guid>
-      <description>  --  --     Artistas e gêneros mais escutados Esta é uma breve visualização baseada no trabalho realizado (neste repositório).
-         --   --      </description>
+      <description>--  --     Artistas e gêneros mais escutados Esta é uma breve visualização baseada no trabalho realizado neste repositório. Através do endpoint disponibilizado pelo Spotify é possível adquirir dados referentes aos artistas mais escutados por um usuário, assim como seus respectivos gêneros musicais. O usuário utilizado para essa visualização foi o meu próprio.
+A rede abaixo mostra a relação entre os artistas no tocante aos seus gêneros musicais.</description>
     </item>
     
     <item>
